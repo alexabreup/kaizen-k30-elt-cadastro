@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kaizen K30 - Guia Executivo | Eletromidia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2⚠️family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
 <style>
   :root{
@@ -243,6 +243,63 @@
     .grid-2, .grid-3, .grid-4, .compare{grid-template-columns:1fr;}
   }
 
+  /* RESUMO TEASER */
+  .teaser-box{
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16);
+    border-left:3px solid var(--orange); border-radius:10px; padding:18px 20px;
+    margin-top:20px; max-width:820px;
+  }
+  .teaser-box p{margin:0; font-size:14px; color:#DCE3EC; line-height:1.7;}
+  .teaser-box strong{color:#fff;}
+
+  /* GLOSSARIO & ROTEIRO */
+  .mini-box{
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12);
+    border-radius:var(--radius); padding:20px 22px; margin-top:18px; max-width:820px;
+  }
+  .mini-box h3{color:#fff; font-size:14px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:12px;}
+  .glossary-list{margin:0; padding:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:8px 20px;}
+  .glossary-list li{font-size:13px; color:#C7D0DD; line-height:1.5;}
+  .glossary-list strong{color:#fff;}
+  .roteiro-list{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
+  .roteiro-list li{font-size:13.5px; color:#C7D0DD;}
+  .roteiro-list strong{color:var(--orange);}
+  .roteiro-list a{color:#DCE3EC; text-decoration:underline; text-decoration-color:rgba(255,255,255,0.3);}
+  @media (max-width:640px){ .glossary-list{grid-template-columns:1fr;} }
+
+  /* MACRO BLOCK HEADER */
+  .macro-block{
+    max-width:1180px; margin:0 auto; padding:36px 20px 0;
+  }
+  .macro-block .macro-label{
+    display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono';
+    font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:#fff; background:var(--navy); padding:8px 16px; border-radius:999px;
+  }
+  .macro-block .macro-desc{color:var(--muted); font-size:13.5px; margin-top:10px; max-width:640px;}
+
+  /* PROPOSTA BADGE */
+  .badge-proposta{
+    display:inline-flex; align-items:center; gap:6px; background:var(--orange-light);
+    color:#B45300; border:1px solid #FFD9B3; font-size:11.5px; font-weight:800;
+    text-transform:uppercase; letter-spacing:.04em; padding:5px 12px; border-radius:999px;
+    margin-bottom:14px;
+  }
+
+  /* CASO NARRADO */
+  .story-box{
+    background:var(--orange-light); border:1px solid #FFD9B3; border-radius:var(--radius);
+    padding:22px 24px; margin-bottom:24px;
+  }
+  .story-box h4{font-size:14px; color:#B45300; text-transform:uppercase; letter-spacing:.04em; margin-bottom:10px;}
+  .story-box p{color:var(--ink); font-size:14.5px; line-height:1.7; margin:0;}
+
+  /* NOTA HIPOTETICA */
+  .hipotese-note{
+    display:flex; gap:10px; background:var(--blue-light); border:1px dashed #A9B7CB;
+    border-radius:10px; padding:14px 16px; font-size:13px; color:var(--blue); margin-top:14px;
+  }
+
   /* BACK TO TOP BUTTON */
   .back-to-top {
     position: fixed;
@@ -309,16 +366,17 @@
     <!-- Container de links no padrão Flexbox CSS -->
     <div class="nav-links">
       <a href="#visao-geral">Visao Geral</a>
-      <a href="#diagnostico">Diagnóstico</a>
-      <a href="#solucao">Solução</a>
+      <a href="#diagnostico">1. Problema</a>
+      <a href="#solucao">2. Solução</a>
       <a href="#frentes-programa">Frentes do Programa</a>
       <a href="#fluxos">Fluxos</a>
-      <a href="#ncm-fiscal">NCM &amp; Fiscal</a>
-      <a href="#departamentos">Por Departamento</a>
       <a href="#taxonomia">Taxonomia</a>
       <a href="#kitting-mrp">Kitting &amp; MRP</a>
       <a href="#governanca">Governança</a>
-      <a href="#kpis">KPIs</a>
+      <a href="#ncm-fiscal">3. NCM &amp; Fiscal</a>
+      <a href="#departamentos">Por Departamento</a>
+      <a href="#apendice">Apêndice</a>
+      <a href="#kpis">4. KPIs</a>
       <a href="#aprovacao">Aprovação</a>
       <a href="#cronograma">Cronograma</a>
     </div>
@@ -346,12 +404,44 @@
       <path d="M121.292 10.0906C122.339 10.0906 123.041 10.4619 123.542 10.8443C123.82 11.0693 124.065 11.3168 124.266 11.5981H124.355V10.5406C124.355 10.4506 124.433 10.3719 124.522 10.3719H126.806C126.895 10.3719 126.973 10.4506 126.973 10.5406V19.8102C126.973 19.9002 126.895 19.9789 126.806 19.9789H124.522C124.433 19.9789 124.355 19.9002 124.355 19.8102V18.7527H124.266C124.065 19.034 123.82 19.2815 123.542 19.5065C123.041 19.8777 122.328 20.2602 121.292 20.2602C118.864 20.2602 116.914 18.2803 116.914 15.1754C116.914 12.0705 118.864 10.0906 121.292 10.0906ZM121.938 17.999C123.353 17.999 124.366 16.9866 124.366 15.1754C124.366 13.3642 123.364 12.3518 121.938 12.3518C120.613 12.3518 119.61 13.3642 119.61 15.1754C119.61 16.9866 120.624 17.999 121.938 17.999Z"/>
     </svg>
     <h1 class="title">Chatbot Cadastro de Itens: transformando o cadastro de itens em <span>inteligência e segurança fiscal</span></h1>
-    <p class="subtitle">Guia executivo para os departamentos Fiscal e Compras: como a reestruturação do cadastro de materiais no SAP - com IA e a norma ISO 8000 - elimina erro fiscal, estoque duplicado e compras emergenciais.</p>
+
+    <div class="teaser-box">
+      <p><strong>Resumo em 4 linhas:</strong> Problema — a base de itens do SAP tem 1.561 códigos duplicados e menos de 10% dos itens com padrão validado, gerando risco fiscal e estoque parado. Solução — um chatbot no Slack, com IA e o padrão internacional ISO 8000, que trava o cadastro certo desde a origem. Investimento — infraestrutura sob demanda (serverless), custo mensal de TI virtualmente desprezível. Prazo — piloto em cerca de 5 semanas após aprovação, rollout completo em até 3 meses.</p>
+    </div>
+
+    <p class="subtitle">Guia executivo para os departamentos Fiscal, Compras e Financeiro: como a reestruturação do cadastro de materiais no SAP - com IA e a norma ISO 8000 - elimina erro fiscal, estoque duplicado e compras emergenciais.</p>
+
+    <div class="mini-box">
+      <h3>📖 Glossário Rápido</h3>
+      <ul class="glossary-list">
+        <li><strong>MDM:</strong> garantir que os dados-chave da empresa tenham um único dono, um único formato e sejam confiáveis.</li>
+        <li><strong>PDM:</strong> a "receita de frase" que todo cadastro de item deve seguir, para não haver descrições diferentes para o mesmo item.</li>
+        <li><strong>NCM:</strong> código de 8 dígitos que diz ao governo qual imposto incide sobre cada item.</li>
+        <li><strong>MRP:</strong> cálculo automático que avisa quando comprar mais estoque, antes de faltar.</li>
+        <li><strong>Poka-Yoke:</strong> mecanismo que impede fisicamente o erro de acontecer, em vez de só avisar depois.</li>
+        <li><strong>CFOP:</strong> código que descreve o tipo de operação (venda, transferência, devolução) em cada nota fiscal.</li>
+        <li><strong>ISO 8000:</strong> norma internacional que define o que é um "dado de qualidade" e como escrevê-lo de forma padronizada.</li>
+        <li><strong>ISO 55000:</strong> norma internacional de gestão de ativos, que trata do ciclo de vida completo dos bens da empresa.</li>
+        <li><strong>BOM:</strong> lista oficial de peças e insumos necessários para montar ou instalar um ativo.</li>
+        <li><strong>Kitting:</strong> separar previamente, em um único kit, todos os itens que uma equipe vai usar em campo.</li>
+      </ul>
+    </div>
+
+    <div class="mini-box">
+      <h3>🧭 Roteiro de leitura por departamento</h3>
+      <ul class="roteiro-list">
+        <li><strong>Fiscal →</strong> priorize <a href="#ncm-fiscal">NCM &amp; Compliance Fiscal</a>, <a href="#diagnostico">Diagnóstico</a> e a tabela Fiscal em <a href="#departamentos">Por Departamento</a>.</li>
+        <li><strong>Compras →</strong> priorize <a href="#kitting-mrp">Kitting &amp; MRP</a>, <a href="#frentes-programa">Frentes do Programa</a> e a tabela Compras em <a href="#departamentos">Por Departamento</a>.</li>
+        <li><strong>Financeiro →</strong> priorize a tabela Financeiro em <a href="#departamentos">Por Departamento</a>, o <a href="#aprovacao">Resumo Executivo</a> e o <a href="#cronograma">Cronograma</a> de investimento.</li>
+      </ul>
+    </div>
+
     <div class="hero-tags">
-      <span class="tag">👉 Destinatários: Fiscal &amp; Compras</span>
+      <span class="tag">👉 Destinatários: Fiscal, Compras &amp; Financeiro</span>
       <span class="tag">👉 IA Gemini Ativa</span>
       <span class="tag">👉 Norma ISO 8000 / PDM</span>
     </div>
+    <p class="subtitle" style="margin-top:28px; margin-bottom:-8px;">Antes dos números: cada duplicidade ativa é estoque parado e risco de recompra; cada item sem PDM validado é um NCM que a IA ainda não consegue confirmar sozinha. É esse o tamanho do problema hoje:</p>
     <div class="stat-grid">
       <div class="stat-card">
         <div class="n">14.799</div>
@@ -374,6 +464,11 @@
 </header>
 
 <main>
+
+  <div class="macro-block">
+    <span class="macro-label">Bloco 1 · O Problema</span>
+    <p class="macro-desc">Diagnóstico da base atual e o impacto que o caos cadastral já gera hoje em Fiscal, Compras e Financeiro.</p>
+  </div>
 
   <!-- PROBLEMA -->
   <section id="diagnostico">
@@ -412,7 +507,7 @@ flowchart LR
 
     <div class="card" style="margin-bottom:18px;">
       <h4>👉 Gargalo identificado: duplicidade ativa multi-grupo</h4>
-      <p>O maior desvio estrutural da base é a presença de <strong>825 descrições idênticas ativas</strong>, que geram <strong>1.561 códigos redundantes</strong> - atravessando prefixos e centros de custo diferentes.</p>
+      <p>Cada descrição duplicada ativa significa dois (ou mais) códigos SAP competindo pelo mesmo item físico - o que infla o saldo de estoque na tela e abre espaço para recompra redundante. Hoje a base tem <strong>825 descrições idênticas ativas</strong>, que geram <strong>1.561 códigos redundantes</strong> - atravessando prefixos e centros de custo diferentes.</p>
     </div>
 
     <div class="table-wrap">
@@ -422,9 +517,9 @@ flowchart LR
         </thead>
         <tbody>
           <tr><td>MULTIMETRO DIGITAL</td><td><span class="badge red">Alto impacto logístico</span></td><td class="mono">FEA0042 / FEA1554</td><td>Bens Pequeno Valor</td><td>Ativo</td></tr>
-          <tr><td></td><td></td><td class="mono">MEC0608 / MEC1001</td><td>OPEX - Estoque</td><td>Ativo</td></tr>
+          <tr><td>MULTIMETRO DIGITAL</td><td><span class="badge red">Alto impacto logístico</span></td><td class="mono">MEC0608 / MEC1001</td><td>OPEX - Estoque</td><td>Ativo</td></tr>
           <tr><td>MAQUINA NUC (Backup)</td><td><span class="badge orange">Redundância de CAPEX</span></td><td class="mono">MEC0006 / MEC0527 / MEC0809</td><td>CAPEX - Estoque</td><td>Ativo</td></tr>
-          <tr><td></td><td></td><td class="mono">MEC0886</td><td>OPEX - Estoque</td><td>Ativo</td></tr>
+          <tr><td>MAQUINA NUC (Backup)</td><td><span class="badge orange">Redundância de CAPEX</span></td><td class="mono">MEC0886</td><td>OPEX - Estoque</td><td>Ativo</td></tr>
         </tbody>
       </table>
     </div>
@@ -434,14 +529,19 @@ flowchart LR
     <div class="grid-2">
       <div class="card">
         <h4>👉 Distribuição de status cadastral</h4>
-        <p><strong>10.276 ativos (69,4%)</strong> vs. <strong>4.523 inativos (30,6%)</strong>. O alto volume de itens inativos reflete histórico obsoleto de compras que precisa ser segregado da base ativa que alimenta o SAP.</p>
+        <p>Misturar item em uso com item morto na mesma base faz o Financeiro e o Compras planejarem sobre dado velho. Hoje temos <strong>10.276 ativos (69,4%)</strong> vs. <strong>4.523 inativos (30,6%)</strong>. O alto volume de itens inativos reflete histórico obsoleto de compras que precisa ser segregado da base ativa que alimenta o SAP.</p>
       </div>
       <div class="card">
         <h4>👉 Conformidade taxonômica (fórmula PDM)</h4>
-        <p>Categoria Parafusos: <strong>294 de 326 fora do padrão (90,2%)</strong>. Categoria Monitores: <strong>492 de 566 fora do padrão (87,0%)</strong>. A maioria dos desvios vem de cadastro manual livre, sem vírgula delimitadora de atributos.</p>
+        <p>Todo item fora do padrão PDM é um item que a IA não consegue reconhecer nem validar sozinha - e que continua dependendo de checagem manual. Categoria Parafusos: <strong>294 de 326 fora do padrão (90,2%)</strong>. Categoria Monitores: <strong>492 de 566 fora do padrão (87,0%)</strong>. A maioria dos desvios vem de cadastro manual livre, sem vírgula delimitadora de atributos.</p>
       </div>
     </div>
   </section>
+
+  <div class="macro-block">
+    <span class="macro-label">Bloco 2 · A Solução</span>
+    <p class="macro-desc">O Chatbot Cadastro de Itens, o padrão ISO 8000/PDM e o fluxo de governança que resolvem o problema descrito acima.</p>
+  </div>
 
   <!-- SOLUÇAO / PILARES -->
   <section id="solucao">
@@ -449,6 +549,11 @@ flowchart LR
       <div class="sec-num">02 · A Solução</div>
       <h2 class="sec-title">Chatbot Cadastro de Itens: um colega que nunca esquece a regra fiscal</h2>
       <p class="sec-desc">O Chatbot Cadastro de Itens é um assistente virtual no Slack que conduz o usuário passo a passo no cadastro de qualquer item - aplicando três camadas de proteção antes que o erro chegue ao SAP.</p>
+    </div>
+
+    <div class="story-box">
+      <h4>🎬 Caso completo: do pedido no Slack ao SAP atualizado</h4>
+      <p>Um técnico digita <code class="inline">@chatbot_itens cadastrar monitor</code> no Slack. O bot pergunta o tipo, o tamanho e a marca, e monta a descrição no padrão ISO 8000: <code class="inline">MONITOR, LCD, 21.5 POLEGADAS, POSITIVO, MASTER</code>. Ele busca esse item exato no SAP e, como o código mestre já existe, reaproveita-o em vez de criar um duplicado. O NCM <code class="inline">8528.59.20</code> já vem travado, homologado previamente pelo Fiscal, e o item entra automaticamente no radar do MRP para reposição futura. Do primeiro clique no Slack ao SAP atualizado, o processo leva menos de 3 minutos - sem retrabalho e sem duplicidade.</p>
     </div>
 
     <div class="compare">
@@ -702,110 +807,10 @@ flowchart LR
     </div>
   </section>
 
-  <!-- NCM FISCAL -->
-  <section id="ncm-fiscal">
-    <div class="sec-head">
-      <div class="sec-num">04 · NCM &amp; Compliance Fiscal</div>
-      <h2 class="sec-title">O que é o NCM e por que ele é crítico</h2>
-      <p class="sec-desc">O NCM (Nomenclatura Comum do Mercosul) é o código de 8 dígitos que define a tributaçao de cada item - IPI, ICMS, PIS/COFINS. Um erro aqui vira problema fiscal grave.</p>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Consequência de NCM errado</th><th>Impacto real na operação</th></tr></thead>
-        <tbody>
-          <tr><td>Alíquota de IPI/ICMS incorreta</td><td>Recolhimento a maior (perda de caixa) ou a menor (multa pesada da Receita).</td></tr>
-          <tr><td>Retenção de nota fiscal em trânsito</td><td>Painel OOH parado, atraso de obra, quebra de SLA com o cliente.</td></tr>
-          <tr><td>Autuaçao em fiscalizaçao</td><td>Multas administrativas, juros moratórios, exposiçao fiscal da diretoria.</td></tr>
-          <tr><td>Divergência CFOP x NCM</td><td>Rejeiçao automática da nota pelo destinatário, exigindo reemissão.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div style="height:24px;"></div>
-
-    <div class="diagram-box">
-      <div class="mermaid">
-flowchart TD
-    A["1👉 IA identifica a<br/>categoria técnica"] --> B["2👉 Consulta NCMs<br/>pré-validados pelo Fiscal"]
-    B --> C{"3👉 Confiança da<br/>IA acima de 90%⚠️"}
-    C -->|"Sim"| D["⚠️ NCM aplicado<br/>automaticamente"]
-    C -->|"Nao"| E["👉 Escala para<br/>Analista Fiscal"]
-    E --> F["👉 Fiscal revisa<br/>e homologa"]
-    F --> D
-    D --> G["👉 NCM travado<br/>no cadastro SAP"]
-
-    classDef step fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1.5px,color:#1A202C
-    classDef decision fill:#FF6B00,stroke:#FF6B00,stroke-width:1px,color:#FFFFFF
-    classDef success fill:#10B981,stroke:#10B981,stroke-width:1px,color:#FFFFFF
-    classDef human fill:#FFF3E8,stroke:#FF6B00,stroke-width:1.5px,color:#7C2D12
-    class A,B step
-    class C decision
-    class D,G success
-    class E,F human
-      </div>
-      <div class="diagram-caption">👉 Leitura: a IA só decide sozinha quando tem certeza alta; abaixo de 90% de confiança, um humano do Fiscal sempre homologa antes de travar no SAP.</div>
-    </div>
-
-    <div style="height:24px;"></div>
-
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Categoria técnica</th><th>Exemplo de item</th><th>NCM vinculado</th><th>Tributos (referência)</th></tr></thead>
-        <tbody>
-          <tr><td>Interface Visual</td><td>Monitor LCD 21.5"</td><td class="mono">8528.59.20</td><td>IPI, ICMS-ST, PIS/COFINS</td></tr>
-          <tr><td>Painel Elétrico/Automaçao</td><td>Modem Celular 4G</td><td class="mono">8517.62.55</td><td>IPI, ICMS, PIS/COFINS</td></tr>
-          <tr><td>Estrutura Mecânica</td><td>Parafuso Sextavado Inox</td><td class="mono">7318.15.00</td><td>IPI Reduzido, ICMS Padrao</td></tr>
-          <tr><td>Conectividade</td><td>Cabo HDMI 2m</td><td class="mono">8544.42.00</td><td>IPI, ICMS, PIS/COFINS</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="color:var(--muted); font-size:12.5px; margin-top:10px;">Nota: os NCMs acima sao exemplificativos; a tabela fiscal definitiva será validada pela curadoria fiscal corporativa da Eletromidia.</p>
-
-    <div style="height:24px;"></div>
-
-    <div class="card">
-      <h4>👉 Rastreabilidade &amp; Data Lineage (ficha limpa fiscal)</h4>
-      <p>O Chatbot Cadastro de Itens grava uma "impressao digital" imutável em cada transação: quem solicitou, o de-para com o código legado, a justificativa técnica do NCM e a assinatura eletrônica do aprovador. Em auditoria da Receita, a Eletromidia demonstra a legitimidade de cada classificação em segundos.</p>
-    </div>
-  </section>
-
-  <!-- DEPARTAMENTOS -->
-  <section id="departamentos">
-    <div class="sec-head">
-      <div class="sec-num">05 · Benefícios por Departamento</div>
-      <h2 class="sec-title">O que muda na prática, na sua mesa de trabalho</h2>
-    </div>
-
-    <div class="grid-2">
-      <div>
-        <h4 style="margin-bottom:12px;">👉 Departamento Fiscal</h4>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Antes</th><th>Depois (com Chatbot Cadastro de Itens)</th></tr></thead>
-            <tbody>
-              <tr><td>NCMs incorretos/ausentes em até 30% dos itens.</td><td>100% de NCMs corretos e vinculados na origem.</td></tr>
-              <tr><td>Retenção recorrente de notas fiscais de transporte.</td><td>Zero notas retidas por erro de classificação.</td></tr>
-              <tr><td>Retrabalho de saneamento pós-faturamento.</td><td>Classificaçao feita uma única vez, na criação.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div>
-        <h4 style="margin-bottom:12px;">👉 Departamento de Compras</h4>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Antes</th><th>Depois (com Chatbot Cadastro de Itens)</th></tr></thead>
-            <tbody>
-              <tr><td>Multiplicidade de códigos para o mesmo parafuso.</td><td>Código mestre único por especificaçao física.</td></tr>
-              <tr><td>Compras de emergência com frete caro e urgente.</td><td>Kitting padronizado e reposiçao preventiva.</td></tr>
-              <tr><td>Técnicos indo a campo com insumo errado.</td><td>Compra correta de primeira, via especificaçao PDM.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="macro-block">
+    <span class="macro-label">Bloco 2 · A Solução (continuação)</span>
+    <p class="macro-desc">Padrão de descrição (PDM), Kitting/MRP e governança contínua - os mecanismos que sustentam a solução no dia a dia.</p>
+  </div>
 
   <!-- TAXONOMIA -->
   <section id="taxonomia">
@@ -923,11 +928,156 @@ flowchart LR
     </div>
   </section>
 
+  <div class="macro-block">
+    <span class="macro-label">Bloco 3 · A Prova</span>
+    <p class="macro-desc">Detalhamento fiscal do NCM, o impacto por departamento (incluindo Financeiro) e o material de referência que sustenta os números apresentados.</p>
+  </div>
+
+  <!-- NCM FISCAL -->
+  <section id="ncm-fiscal">
+    <div class="sec-head">
+      <div class="sec-num">04 · NCM &amp; Compliance Fiscal</div>
+      <h2 class="sec-title">O que é o NCM e por que ele é crítico</h2>
+      <p class="sec-desc">O NCM (Nomenclatura Comum do Mercosul) é o código de 8 dígitos que define a tributaçao de cada item - IPI, ICMS, PIS/COFINS. Um erro aqui vira problema fiscal grave.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Consequência de NCM errado</th><th>Impacto real na operação</th></tr></thead>
+        <tbody>
+          <tr><td>Alíquota de IPI/ICMS incorreta</td><td>Recolhimento a maior (perda de caixa) ou a menor (multa pesada da Receita).</td></tr>
+          <tr><td>Retenção de nota fiscal em trânsito</td><td>Painel OOH parado, atraso de obra, quebra de SLA com o cliente.</td></tr>
+          <tr><td>Autuaçao em fiscalizaçao</td><td>Multas administrativas, juros moratórios, exposiçao fiscal da diretoria.</td></tr>
+          <tr><td>Divergência CFOP x NCM</td><td>Rejeiçao automática da nota pelo destinatário, exigindo reemissão.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="hipotese-note">
+      <span>💡</span>
+      <span><strong>Exemplo ilustrativo (hipotético, não auditado):</strong> um lote de 500 monitores LCD classificado com NCM errado, aplicando uma alíquota de ICMS-ST 6 pontos percentuais abaixo da correta sobre um custo unitário de R$ 900, gera uma diferença de recolhimento da ordem de <strong>R$ 27.000</strong> nesse único lote - valor sujeito a multa e juros se identificado em fiscalização. O número é apenas para dar ordem de grandeza ao risco; não é um caso real auditado.</span>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="diagram-box">
+      <div class="mermaid">
+flowchart TD
+    A["1👉 IA identifica a<br/>categoria técnica"] --> B["2👉 Consulta NCMs<br/>pré-validados pelo Fiscal"]
+    B --> C{"3👉 Confiança da<br/>IA acima de 90%⚠️"}
+    C -->|"Sim"| D["⚠️ NCM aplicado<br/>automaticamente"]
+    C -->|"Nao"| E["👉 Escala para<br/>Analista Fiscal"]
+    E --> F["👉 Fiscal revisa<br/>e homologa"]
+    F --> D
+    D --> G["👉 NCM travado<br/>no cadastro SAP"]
+
+    classDef step fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1.5px,color:#1A202C
+    classDef decision fill:#FF6B00,stroke:#FF6B00,stroke-width:1px,color:#FFFFFF
+    classDef success fill:#10B981,stroke:#10B981,stroke-width:1px,color:#FFFFFF
+    classDef human fill:#FFF3E8,stroke:#FF6B00,stroke-width:1.5px,color:#7C2D12
+    class A,B step
+    class C decision
+    class D,G success
+    class E,F human
+      </div>
+      <div class="diagram-caption">👉 Leitura: a IA só decide sozinha quando tem certeza alta; abaixo de 90% de confiança, um humano do Fiscal sempre homologa antes de travar no SAP.</div>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Categoria técnica</th><th>Exemplo de item</th><th>NCM vinculado</th><th>Tributos (referência)</th></tr></thead>
+        <tbody>
+          <tr><td>Interface Visual</td><td>Monitor LCD 21.5"</td><td class="mono">8528.59.20</td><td>IPI, ICMS-ST, PIS/COFINS</td></tr>
+          <tr><td>Painel Elétrico/Automaçao</td><td>Modem Celular 4G</td><td class="mono">8517.62.55</td><td>IPI, ICMS, PIS/COFINS</td></tr>
+          <tr><td>Estrutura Mecânica</td><td>Parafuso Sextavado Inox</td><td class="mono">7318.15.00</td><td>IPI Reduzido, ICMS Padrao</td></tr>
+          <tr><td>Conectividade</td><td>Cabo HDMI 2m</td><td class="mono">8544.42.00</td><td>IPI, ICMS, PIS/COFINS</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color:var(--muted); font-size:12.5px; margin-top:10px;">Nota: os NCMs acima sao exemplificativos; a tabela fiscal definitiva será validada pela curadoria fiscal corporativa da Eletromidia.</p>
+
+    <div style="height:24px;"></div>
+
+    <div class="card">
+      <h4>👉 Rastreabilidade &amp; Data Lineage (ficha limpa fiscal)</h4>
+      <p>O Chatbot Cadastro de Itens grava uma "impressao digital" imutável em cada transação: quem solicitou, o de-para com o código legado, a justificativa técnica do NCM e a assinatura eletrônica do aprovador. Em auditoria da Receita, a Eletromidia demonstra a legitimidade de cada classificação em segundos.</p>
+    </div>
+  </section>
+
+  <!-- DEPARTAMENTOS -->
+  <section id="departamentos">
+    <div class="sec-head">
+      <div class="sec-num">05 · Benefícios por Departamento</div>
+      <h2 class="sec-title">O que muda na prática, na sua mesa de trabalho</h2>
+    </div>
+
+    <div class="grid-3">
+      <div>
+        <h4 style="margin-bottom:12px;">👉 Departamento Fiscal</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Antes</th><th>Depois</th></tr></thead>
+            <tbody>
+              <tr><td>NCMs incorretos/ausentes em até 30% dos itens.</td><td>100% de NCMs corretos e vinculados na origem.</td></tr>
+              <tr><td>Retenção recorrente de notas fiscais de transporte.</td><td>Zero notas retidas por erro de classificação.</td></tr>
+              <tr><td>Retrabalho de saneamento pós-faturamento.</td><td>Classificaçao feita uma única vez, na criação.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h4 style="margin-bottom:12px;">👉 Departamento de Compras</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Antes</th><th>Depois</th></tr></thead>
+            <tbody>
+              <tr><td>Multiplicidade de códigos para o mesmo parafuso.</td><td>Código mestre único por especificaçao física.</td></tr>
+              <tr><td>Compras de emergência com frete caro e urgente.</td><td>Kitting padronizado e reposiçao preventiva.</td></tr>
+              <tr><td>Técnicos indo a campo com insumo errado.</td><td>Compra correta de primeira, via especificaçao PDM.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h4 style="margin-bottom:12px;">👉 Departamento Financeiro</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Antes</th><th>Depois</th></tr></thead>
+            <tbody>
+              <tr><td>Capital de giro imobilizado em estoque duplicado (1.561 códigos redundantes).</td><td>Estoque enxuto, com um único código mestre por item físico.</td></tr>
+              <tr><td>Horas de equipe consumidas em saneamento manual de cadastro.</td><td>Cadastro correto na origem, sem retrabalho recorrente.</td></tr>
+              <tr><td>Exposição a multas e recolhimento tributário incorreto por NCM errado (ver seção Fiscal).</td><td>NCM homologado e travado antes do item entrar no SAP.</td></tr>
+              <tr><td>Orçamento pouco previsível, sujeito a compras emergenciais de última hora.</td><td>Previsibilidade orçamentária via reposição automática por MRP.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APENDICE -->
+  <section id="apendice">
+    <div class="sec-head">
+      <div class="sec-num">05.1 · Material de Referência</div>
+      <h2 class="sec-title">Apêndice: tabelas de apoio para consulta detalhada</h2>
+      <p class="sec-desc">As tabelas comparativas completas usadas como evidência ao longo deste guia ficam disponíveis para consulta nas seções técnicas: a tabela de descrição legada x padrão ISO 8000 está em <a href="#taxonomia" style="color:var(--orange); font-weight:700;">Taxonomia de Dados</a>, e a lista completa de itens do kit de instalação está em <a href="#kitting-mrp" style="color:var(--orange); font-weight:700;">Kitting &amp; MRP</a>. Este guia prioriza a leitura da narrativa e do impacto por departamento antes dessas tabelas de apoio.</p>
+    </div>
+  </section>
+
+  <div class="macro-block">
+    <span class="macro-label">Bloco 4 · Próximos Passos</span>
+    <p class="macro-desc">Metas do projeto, resumo para aprovação e cronograma de implementação - tudo aqui é projeção futura, não resultado já entregue.</p>
+  </div>
+
   <!-- KPIS -->
   <section id="kpis">
     <div class="sec-head">
+      <span class="badge-proposta">⚠️ Proposta — não implementado</span>
       <div class="sec-num">09 · Indicadores de Sucesso</div>
       <h2 class="sec-title">Metas do projeto, em números simples</h2>
+      <p class="sec-desc">As metas abaixo são o alvo do programa após aprovação e rollout - não são resultados já alcançados na base atual (ver diagnóstico real na seção Problema).</p>
     </div>
     <div class="grid-4">
       <div class="kpi"><div class="n">100%</div><div class="l">Itens ISO 8000 na base ativa</div></div>
@@ -983,8 +1133,10 @@ flowchart LR
   <!-- CRONOGRAMA -->
   <section id="cronograma">
     <div class="sec-head">
+      <span class="badge-proposta">⚠️ Proposta — não implementado</span>
       <div class="sec-num">11 · Cronograma</div>
       <h2 class="sec-title">Próximos passos, do sim ao rollout</h2>
+      <p class="sec-desc">Datas e fases abaixo são a proposta de execução a partir da aprovação executiva - ainda não iniciadas.</p>
     </div>
 
     <div class="diagram-box">
