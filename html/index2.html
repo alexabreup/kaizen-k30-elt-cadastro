@@ -150,6 +150,11 @@
     margin-top:12px; padding-top:12px; border-top:1px dashed var(--border);
   }
   .mermaid{display:flex; justify-content:center;}
+  #cronograma .mermaid svg {
+    min-width: 800px;
+    width: 100% !important;
+    height: auto !important;
+  }
 
   /* KPI */
   .kpi{
@@ -500,7 +505,7 @@ flowchart TD
 
     <div class="card">
       <h4>👉 Rastreabilidade &amp; Data Lineage (ficha limpa fiscal)</h4>
-      <p>O Chatbot-Itens grava uma "impressao digital" imutável em cada transaçao: quem solicitou, o de-para com o código legado, a justificativa técnica do NCM e a assinatura eletrônica do aprovador. Em auditoria da Receita, a Eletromidia demonstra a legitimidade de cada classificação em segundos.</p>
+      <p>O Chatbot-Itens grava uma "impressao digital" imutável em cada transação: quem solicitou, o de-para com o código legado, a justificativa técnica do NCM e a assinatura eletrônica do aprovador. Em auditoria da Receita, a Eletromidia demonstra a legitimidade de cada classificação em segundos.</p>
     </div>
   </section>
 
@@ -703,12 +708,12 @@ flowchart LR
 
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Item de decisão</th><th>Definiçao proposta pelo Kaizen K30</th></tr></thead>
+        <thead><tr><th>Item de decisão</th><th>Definição proposta pelo Kaizen K30</th></tr></thead>
         <tbody>
           <tr><td>A proposta (o quê)</td><td>Chatbot inteligente no Slack para guiar, automatizar e governar a entrada de cadastros de materiais.</td></tr>
-          <tr><td>O propósito (por quê)</td><td>Saneamento total da base, blindagem tributária contra autuação por NCM incorreto e reduçao do estoque duplicado.</td></tr>
+          <tr><td>O propósito (por quê)</td><td>Saneamento total da base, blindagem tributária contra autuação por NCM incorreto e redução do estoque duplicado.</td></tr>
           <tr><td>Tecnologia (onde)</td><td>Hospedagem segura e serverless na Google Cloud (GCP) com Vertex AI / Gemini.</td></tr>
-          <tr><td>Investimento (quanto)</td><td>Infraestrutura sob demanda - cobra-se por transaçao, custo mensal de TI virtualmente desprezível.</td></tr>
+          <tr><td>Investimento (quanto)</td><td>Infraestrutura sob demanda - cobra-se por transação, custo mensal de TI virtualmente desprezível.</td></tr>
         </tbody>
       </table>
     </div>
@@ -724,17 +729,17 @@ flowchart LR
     <div class="diagram-box">
       <div class="mermaid">
 gantt
-    title Cronograma de Implementaçao - Chatbot-Itens
+    title Cronograma de Implementação - Chatbot-Itens
     dateFormat  YYYY-MM-DD
     axisFormat  Sem. %W
     section Fase 1 - Aprovação
-    Aprovação executiva e homologaçao da arquitetura :f1, 2026-08-03, 7d
+    Aprovação executiva e homologação da arquitetura :f1, 2026-08-03, 7d
     section Fase 2 - Setup
-    Configuraçao do ambiente Google Cloud            :f2, after f1, 7d
+    Configuração do ambiente Google Cloud            :f2, after f1, 7d
     section Fase 3 - Ajuste de IA
     Ajuste do Vertex AI / Gemini com taxonomia        :f3, after f2, 14d
     section Fase 4 - Piloto
-    Operaçao piloto com 50 itens de alto volume       :f4, after f3, 14d
+    Operação piloto com 50 itens de alto volume       :f4, after f3, 14d
     section Fase 5 - Rollout
     Rollout corporativo e saneamento em massa         :f5, after f4, 30d
       </div>
@@ -747,10 +752,10 @@ gantt
       <table>
         <thead><tr><th>Fase</th><th>Atividade principal</th><th>Prazo</th><th>Envolvidos</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td>Aprovação executiva e homologaçao da arquitetura.</td><td>1 semana</td><td>Diretoria, TI e Patrocinador Kaizen</td></tr>
-          <tr><td>2</td><td>Configuraçao inicial do ambiente Google Cloud.</td><td>1 semana</td><td>Equipe de TI &amp; Consultoria</td></tr>
+          <tr><td>1</td><td>Aprovação executiva e homologação da arquitetura.</td><td>1 semana</td><td>Diretoria, TI e Patrocinador Kaizen</td></tr>
+          <tr><td>2</td><td>Configuração inicial do ambiente Google Cloud.</td><td>1 semana</td><td>Equipe de TI &amp; Consultoria</td></tr>
           <tr><td>3</td><td>Ajuste do modelo Vertex AI / Gemini com a taxonomia.</td><td>2 semanas</td><td>Curadores de Compras, Fiscal e Engenharia</td></tr>
-          <tr><td>4</td><td>Operaçao piloto controlada com 50 itens de alto volume.</td><td>2 semanas</td><td>Almoxarifado, Fiscal e Compras</td></tr>
+          <tr><td>4</td><td>Operação piloto controlada com 50 itens de alto volume.</td><td>2 semanas</td><td>Almoxarifado, Fiscal e Compras</td></tr>
           <tr><td>5</td><td>Rollout oficial e saneamento em massa da base.</td><td>1 mês</td><td>Todos os compradores e técnicos autorizados</td></tr>
         </tbody>
       </table>
@@ -760,7 +765,7 @@ gantt
 </main>
 
 <footer>
-  <p style="font-style:italic; color:#B8C2D1; max-width:560px; margin:0 auto 14px;">"A qualidade do cadastro determina a precisao do estoque e a segurança do imposto."</p>
+  <p style="font-style:italic; color:#B8C2D1; max-width:560px; margin:0 auto 14px;">"A qualidade do cadastro determina a precisão do estoque e a segurança do imposto."</p>
   <p><strong>Comitê Multidisciplinar – Kaizen K30</strong> - Eletromidia S.A. · c 2026 Todos os direitos reservados.</p>
 </footer>
 
