@@ -1,0 +1,6 @@
+# Netlify Configuration File
+# Configuração para publicar a pasta 'html' contendo o index.html e recursos associados.
+
+[build]
+  # Diretório contendo os arquivos estáticos para publicação
+  publish = "html"
