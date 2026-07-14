@@ -332,6 +332,60 @@
     transform: translateY(-3px);
     background-color: #E05A00;
   }
+
+  /* CAROUSEL DEPARTAMENTOS */
+  .dept-carousel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-top: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  }
+  .dept-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .dept-tab {
+    background: var(--blue-light);
+    color: var(--blue);
+    border: none;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dept-tab:hover {
+    background: #E2E8F0;
+  }
+  .dept-tab.active {
+    background: var(--orange);
+    color: #fff;
+  }
+  .dept-slides {
+    position: relative;
+  }
+  .dept-slide {
+    display: none;
+    animation: fadeInDept 0.4s ease-in-out;
+  }
+  .dept-slide.active {
+    display: block;
+  }
+  @keyframes fadeInDept {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
 <body>
@@ -1014,45 +1068,58 @@ flowchart TD
       <h2 class="sec-title">O que muda na prática, na sua mesa de trabalho</h2>
     </div>
 
-    <div class="grid-3">
-      <div>
-        <h4 style="margin-bottom:12px;">👉 Departamento Fiscal</h4>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Antes</th><th>Depois</th></tr></thead>
-            <tbody>
-              <tr><td>NCMs incorretos/ausentes em até 30% dos itens.</td><td>100% de NCMs corretos e vinculados na origem.</td></tr>
-              <tr><td>Retenção recorrente de notas fiscais de transporte.</td><td>Zero notas retidas por erro de classificação.</td></tr>
-              <tr><td>Retrabalho de saneamento pós-faturamento.</td><td>Classificaçao feita uma única vez, na criação.</td></tr>
-            </tbody>
-          </table>
-        </div>
+    <div class="dept-carousel">
+      <div class="dept-tabs">
+        <button class="dept-tab active" data-dept="fiscal">🏛️ Departamento Fiscal</button>
+        <button class="dept-tab" data-dept="compras">📦 Departamento de Compras</button>
+        <button class="dept-tab" data-dept="financeiro">💰 Departamento Financeiro</button>
       </div>
-      <div>
-        <h4 style="margin-bottom:12px;">👉 Departamento de Compras</h4>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Antes</th><th>Depois</th></tr></thead>
-            <tbody>
-              <tr><td>Multiplicidade de códigos para o mesmo parafuso.</td><td>Código mestre único por especificaçao física.</td></tr>
-              <tr><td>Compras de emergência com frete caro e urgente.</td><td>Kitting padronizado e reposiçao preventiva.</td></tr>
-              <tr><td>Técnicos indo a campo com insumo errado.</td><td>Compra correta de primeira, via especificaçao PDM.</td></tr>
-            </tbody>
-          </table>
+
+      <div class="dept-slides">
+        <!-- Fiscal Slide -->
+        <div class="dept-slide active" id="dept-fiscal">
+          <h4 style="margin-bottom:12px; color: var(--navy); display: flex; align-items: center; gap: 8px;">👉 Departamento Fiscal</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Antes</th><th>Depois</th></tr></thead>
+              <tbody>
+                <tr><td>NCMs incorretos/ausentes em até 30% dos itens.</td><td>100% de NCMs corretos e vinculados na origem.</td></tr>
+                <tr><td>Retenção recorrente de notas fiscais de transporte.</td><td>Zero notas retidas por erro de classificação.</td></tr>
+                <tr><td>Retrabalho de saneamento pós-faturamento.</td><td>Classificaçao feita uma única vez, na criação.</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <div>
-        <h4 style="margin-bottom:12px;">👉 Departamento Financeiro</h4>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Antes</th><th>Depois</th></tr></thead>
-            <tbody>
-              <tr><td>Capital de giro imobilizado em estoque duplicado (1.561 códigos redundantes).</td><td>Estoque enxuto, com um único código mestre por item físico.</td></tr>
-              <tr><td>Horas de equipe consumidas em saneamento manual de cadastro.</td><td>Cadastro correto na origem, sem retrabalho recorrente.</td></tr>
-              <tr><td>Exposição a multas e recolhimento tributário incorreto por NCM errado (ver seção Fiscal).</td><td>NCM homologado e travado antes do item entrar no SAP.</td></tr>
-              <tr><td>Orçamento pouco previsível, sujeito a compras emergenciais de última hora.</td><td>Previsibilidade orçamentária via reposição automática por MRP.</td></tr>
-            </tbody>
-          </table>
+
+        <!-- Compras Slide -->
+        <div class="dept-slide" id="dept-compras">
+          <h4 style="margin-bottom:12px; color: var(--navy); display: flex; align-items: center; gap: 8px;">👉 Departamento de Compras</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Antes</th><th>Depois</th></tr></thead>
+              <tbody>
+                <tr><td>Multiplicidade de códigos para o mesmo parafuso.</td><td>Código mestre único por especificaçao física.</td></tr>
+                <tr><td>Compras de emergência com frete caro e urgente.</td><td>Kitting padronizado e reposiçao preventiva.</td></tr>
+                <tr><td>Técnicos indo a campo com insumo errado.</td><td>Compra correta de primeira, via especificaçao PDM.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Financeiro Slide -->
+        <div class="dept-slide" id="dept-financeiro">
+          <h4 style="margin-bottom:12px; color: var(--navy); display: flex; align-items: center; gap: 8px;">👉 Departamento Financeiro</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Antes</th><th>Depois</th></tr></thead>
+              <tbody>
+                <tr><td>Capital de giro imobilizado em estoque duplicado (1.561 códigos redundantes).</td><td>Estoque enxuto, com um único código mestre por item físico.</td></tr>
+                <tr><td>Horas de equipe consumidas em saneamento manual de cadastro.</td><td>Cadastro correto na origem, sem retrabalho recorrente.</td></tr>
+                <tr><td>Exposição a multas e recolhimento tributário incorreto por NCM errado (ver seção Fiscal).</td><td>NCM homologado e travado antes do item entrar no SAP.</td></tr>
+                <tr><td>Orçamento pouco previsível, sujeito a compras emergenciais de última hora.</td><td>Previsibilidade orçamentária via reposição automática por MRP.</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -1269,6 +1336,32 @@ gantt
       link.addEventListener('click', () => {
         navToggle.classList.remove('active');
         navLinks.classList.remove('active');
+      });
+    });
+  }
+
+  // Lógica do carrossel/abas dos Departamentos
+  const deptTabs = document.querySelectorAll('.dept-tab');
+  const deptSlides = document.querySelectorAll('.dept-slide');
+
+  if (deptTabs && deptSlides) {
+    deptTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove 'active' de todas as abas e adiciona na clicada
+        deptTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        // Pega o id correspondente do slide
+        const targetId = 'dept-' + tab.getAttribute('data-dept');
+
+        // Remove 'active' de todos os slides e adiciona no selecionado
+        deptSlides.forEach(slide => {
+          if (slide.id === targetId) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        });
       });
     });
   }
