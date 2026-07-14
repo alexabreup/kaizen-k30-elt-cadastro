@@ -1,0 +1,1712 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia Executivo Kaizen K30 - Eletromidia</title>
+    <!-- Fonte corporativa de alta legibilidade -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Mermaid.js CDN para diagramas -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+    <style>
+      /* Reset & Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --color-brand: #FF6B00;
+        --color-black: #000000;
+        --color-light-bg: #F4F6F9;
+        --color-sidebar-bg: #FFFFFF;
+        --color-card-bg: #FFFFFF;
+        --color-card-hover: #F8FAFC;
+        --color-border: #E2E8F0;
+        --color-text-primary: #1A202C;
+        --color-text-secondary: #4A5568;
+        --color-text-muted: #718096;
+        
+        --color-success: #10B981;
+        --color-danger: #EF4444;
+        --color-warning: #F59E0B;
+        
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background-color: var(--color-light-bg);
+        color: var(--color-text-primary);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow: hidden;
+      }
+
+      /* Layout */
+      .app-container {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 280px;
+        background-color: var(--color-sidebar-bg);
+        border-right: 1px solid var(--color-border);
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+      }
+
+      .sidebar-header {
+        padding: 24px;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .brand-title {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        color: var(--color-brand);
+        text-transform: uppercase;
+      }
+
+      .brand-subtitle {
+        font-size: 11px;
+        color: var(--color-text-secondary);
+        margin-top: 4px;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .sidebar-menu {
+        flex-grow: 1;
+        padding: 24px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        border: 1px solid transparent;
+      }
+
+      .menu-item:hover {
+        background-color: #F8FAFC;
+        color: var(--color-text-primary);
+      }
+
+      .menu-item.active {
+        background-color: rgba(255, 107, 0, 0.06);
+        color: var(--color-brand);
+        border-color: rgba(255, 107, 0, 0.15);
+        font-weight: 600;
+      }
+
+      .menu-item svg {
+        margin-right: 12px;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+
+      .sidebar-footer {
+        padding: 24px;
+        border-top: 1px solid var(--color-border);
+        font-size: 11px;
+        color: var(--color-text-muted);
+      }
+
+      /* Main Content */
+      .main-content {
+        flex-grow: 1;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .top-bar {
+        height: 70px;
+        border-bottom: 1px solid var(--color-border);
+        padding: 0 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #FFFFFF;
+      }
+
+      .page-title {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: #1A202C;
+      }
+
+      .system-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--color-text-secondary);
+      }
+
+      .status-indicator {
+        width: 8px;
+        height: 8px;
+        background-color: var(--color-success);
+        border-radius: 50%;
+      }
+
+      .content-body {
+        padding: 40px;
+        max-width: 1400px;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .section-panel {
+        display: none;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .section-panel.active {
+        display: flex;
+      }
+
+      /* Card Elements */
+      .grid-cols-4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+
+      .grid-cols-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .kpi-card {
+        background-color: var(--color-card-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      }
+
+      .kpi-card:hover {
+        border-color: #CBD5E0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+      }
+
+      .kpi-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: var(--color-text-secondary);
+        font-weight: 600;
+        letter-spacing: 0.05em;
+      }
+
+      .kpi-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--color-text-primary);
+      }
+
+      .kpi-value.brand {
+        color: var(--color-brand);
+      }
+
+      .kpi-value.danger {
+        color: var(--color-danger);
+      }
+
+      .kpi-desc {
+        font-size: 12px;
+        color: var(--color-text-muted);
+      }
+
+      /* Custom Visualizations */
+      .visual-card {
+        background-color: var(--color-card-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      }
+
+      .visual-card-title {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        border-left: 3px solid var(--color-brand);
+        padding-left: 12px;
+        color: #1A202C;
+      }
+
+      .chart-bar-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .chart-bar-row {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .chart-bar-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+      }
+
+      .chart-bar-name {
+        color: var(--color-text-primary);
+        font-weight: 500;
+      }
+
+      .chart-bar-val {
+        color: var(--color-text-secondary);
+        font-family: var(--font-mono);
+      }
+
+      .chart-bar-outer {
+        height: 12px;
+        background-color: #EDF2F7;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      .chart-bar-inner {
+        height: 100%;
+        background-color: var(--color-brand);
+        border-radius: 6px;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .chart-bar-inner.danger {
+        background-color: var(--color-danger);
+      }
+
+      .chart-bar-inner.success {
+        background-color: var(--color-success);
+      }
+
+      /* Tables / Spreadsheets */
+      .table-filter-tabs {
+        display: flex;
+        gap: 8px;
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: 16px;
+      }
+
+      .tab-btn {
+        background: none;
+        border: 1px solid var(--color-border);
+        color: var(--color-text-secondary);
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .tab-btn:hover {
+        border-color: #CBD5E0;
+        color: var(--color-text-primary);
+      }
+
+      .tab-btn.active {
+        background-color: var(--color-brand);
+        border-color: var(--color-brand);
+        color: #FFFFFF;
+      }
+
+      .table-container {
+        overflow-x: auto;
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        background-color: #FFFFFF;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      }
+
+      .executive-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        text-align: left;
+      }
+
+      .executive-table th {
+        background-color: #F8FAFC;
+        color: var(--color-text-secondary);
+        font-weight: 600;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--color-border);
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.05em;
+      }
+
+      .executive-table td {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--color-border);
+        vertical-align: top;
+        color: #2D3748;
+      }
+
+      .executive-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .executive-table tr:hover td {
+        background-color: #F8FAFC;
+      }
+
+      .badge-status {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        font-family: var(--font-mono);
+      }
+
+      .badge-status.danger {
+        background-color: rgba(239, 68, 68, 0.08);
+        color: var(--color-danger);
+        border: 1px solid rgba(239, 68, 68, 0.15);
+      }
+
+      .badge-status.success {
+        background-color: rgba(16, 185, 129, 0.08);
+        color: var(--color-success);
+        border: 1px solid rgba(16, 185, 129, 0.15);
+      }
+
+      .item-code {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-brand);
+        font-weight: 600;
+      }
+
+      .item-desc-before {
+        color: var(--color-text-muted);
+        text-decoration: line-through;
+      }
+
+      .item-desc-after {
+        font-weight: 600;
+        color: var(--color-text-primary);
+      }
+
+      .ncm-code {
+        font-family: var(--font-mono);
+        font-weight: 500;
+        color: var(--color-text-secondary);
+      }
+
+      /* Slack Simulator (Authentic Light Slack Theme) */
+      .slack-simulator-container {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        height: 600px;
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #FFFFFF;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      .slack-sidebar {
+        background-color: #3F0E40; /* Eggplant Slack Sidebar */
+        color: #FFFFFF;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .slack-workspace-header {
+        height: 52px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .slack-workspace-name {
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: -0.01em;
+      }
+
+      .slack-sidebar-list {
+        padding: 12px 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .slack-channel-item {
+        display: flex;
+        align-items: center;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #BCABB6;
+        cursor: pointer;
+        transition: background-color 0.1s ease;
+      }
+
+      .slack-channel-item:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      .slack-channel-item.active {
+        background-color: #1164A3; /* Slack blue */
+        color: #FFFFFF;
+        font-weight: 500;
+      }
+
+      .slack-channel-item svg {
+        margin-right: 8px;
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+        stroke: currentColor;
+      }
+
+      .slack-chat-area {
+        display: flex;
+        flex-direction: column;
+        background-color: #FFFFFF;
+      }
+
+      .slack-chat-header {
+        height: 52px;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #E2E8F0;
+        background-color: #FFFFFF;
+      }
+
+      .slack-chat-title {
+        font-weight: 800;
+        font-size: 15px;
+        color: #1D1C1D;
+      }
+
+      .slack-chat-desc {
+        font-size: 12px;
+        color: #616061;
+        margin-left: 12px;
+        border-left: 1px solid #E2E8F0;
+        padding-left: 12px;
+      }
+
+      .slack-messages-viewport {
+        flex-grow: 1;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background-color: #FFFFFF;
+      }
+
+      .slack-message-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .slack-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 4px;
+        background-color: #ECF2FF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 14px;
+        color: #1164A3;
+        flex-shrink: 0;
+      }
+
+      .slack-avatar.bot {
+        background-color: var(--color-brand);
+        color: #FFFFFF;
+      }
+
+      .slack-message-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .slack-message-header {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+      }
+
+      .slack-sender-name {
+        font-weight: 700;
+        font-size: 14px;
+        color: #1D1C1D;
+      }
+
+      .slack-bot-label {
+        background-color: #EDF2F7;
+        color: #616061;
+        font-size: 9px;
+        padding: 1px 4px;
+        border-radius: 2px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .slack-message-time {
+        font-size: 11px;
+        color: #616061;
+      }
+
+      .slack-message-text {
+        font-size: 14px;
+        color: #1D1C1D;
+        white-space: pre-line;
+      }
+
+      .slack-interactive-block {
+        margin-top: 8px;
+        background-color: #F8F8F8;
+        border-radius: 6px;
+        border: 1px solid #E2E8F0;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 500px;
+      }
+
+      .slack-block-title {
+        font-size: 11px;
+        font-weight: 700;
+        color: #616061;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .slack-block-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .slack-block-btn {
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        color: #1D1C1D;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.1s ease;
+      }
+
+      .slack-block-btn:hover {
+        background-color: #F8F8F8;
+        border-color: #CBD5E0;
+      }
+
+      .slack-block-btn.primary {
+        background-color: var(--color-brand);
+        border-color: var(--color-brand);
+        color: #FFFFFF;
+      }
+
+      .slack-block-btn.primary:hover {
+        background-color: #E05E00;
+      }
+
+      .slack-input-area {
+        padding: 0 20px 20px 20px;
+        background-color: #FFFFFF;
+      }
+
+      .slack-input-box {
+        border: 1px solid #CBD5E0;
+        border-radius: 8px;
+        background-color: #FFFFFF;
+        padding: 12px 16px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .slack-input-text {
+        background: none;
+        border: none;
+        color: #1D1C1D;
+        font-size: 14px;
+        outline: none;
+        width: 100%;
+        resize: none;
+      }
+
+      .slack-input-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+        border-top: 1px solid #EDF2F7;
+        padding-top: 12px;
+      }
+
+      .slack-input-btn {
+        background-color: #007A5A; /* Slack Green */
+        border: none;
+        color: #FFFFFF;
+        padding: 6px 16px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .slack-input-btn:hover {
+        background-color: #148567;
+      }
+
+      .slack-input-btn:disabled {
+        background-color: #EDF2F7;
+        color: #A0AEC0;
+        cursor: not-allowed;
+      }
+
+      /* General Layout helpers */
+      .text-lead {
+        font-size: 16px;
+        color: var(--color-text-secondary);
+        max-width: 800px;
+      }
+
+      .markdown-card {
+        background-color: var(--color-card-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        padding: 32px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      }
+
+      .markdown-card h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: #1A202C;
+      }
+
+      .markdown-card p {
+        color: var(--color-text-secondary);
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+
+      .markdown-card ul {
+        padding-left: 20px;
+        margin-bottom: 16px;
+        font-size: 14px;
+        color: var(--color-text-secondary);
+      }
+
+      .markdown-card li {
+        margin-bottom: 8px;
+      }
+
+      /* Mermaid Chart styling */
+      .mermaid-wrapper {
+        background-color: #FFFFFF;
+        padding: 24px;
+        border-radius: 6px;
+        border: 1px solid var(--color-border);
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      /* Scrollbars */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--color-light-bg);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #CBD5E0;
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #A0AEC0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="sidebar-header">
+            <div class="brand-title">Eletromidia</div>
+            <div class="brand-subtitle">Kaizen K30 - Supply/MDM</div>
+          </div>
+          
+          <nav class="sidebar-menu">
+            <div class="menu-item active" data-tab="visao-geral">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              Visão Geral
+            </div>
+            
+            <div class="menu-item" data-tab="diagnostico">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+              </svg>
+              Diagnóstico da Base
+            </div>
+            
+            <div class="menu-item" data-tab="fluxo-governanca">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+              </svg>
+              Fluxo de Governança
+            </div>
+            
+            <div class="menu-item" data-tab="comparativo">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+              </svg>
+              Tabela Comparativa
+            </div>
+            
+            <div class="menu-item" data-tab="simulador-slack">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+              </svg>
+              Simulador Slack
+            </div>
+          </nav>
+          
+          <div class="sidebar-footer">
+            Eletromidia S.A.<br>
+            © 2026 Todos os direitos reservados.
+          </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+          <header class="top-bar">
+            <div class="page-title" id="bar-page-title">Guia Executivo Kaizen K30</div>
+            <div class="system-status">
+              <span class="status-indicator"></span>
+              MDM Base de Dados SAP: 100% Saneada Proposta
+            </div>
+          </header>
+
+          <div class="content-body">
+            
+            <!-- SECTION: VISÃO GERAL -->
+            <section id="visao-geral" class="section-panel active">
+              <div>
+                <h1 style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">Guia Executivo do Projeto Kaizen K30</h1>
+                <p class="text-lead">Reestruturação logística e governança cadastral do MUBI Nacional no SAP sob a norma ISO 8000 / PDM.</p>
+              </div>
+              
+              <div class="grid-cols-4">
+                <div class="kpi-card">
+                  <span class="kpi-title">Total de Itens Auditados</span>
+                  <div class="kpi-value">14.799</div>
+                  <span class="kpi-desc">Base completa extraída em Junho/2026</span>
+                </div>
+                
+                <div class="kpi-card">
+                  <span class="kpi-title">Cadastros Ativos</span>
+                  <div class="kpi-value brand">10.276</div>
+                  <span class="kpi-desc">69,44% dos cadastros totais</span>
+                </div>
+                
+                <div class="kpi-card">
+                  <span class="kpi-title">Duplicidades Ativas</span>
+                  <div class="kpi-value danger">1.561</div>
+                  <span class="kpi-desc">Linhas com descrição idêntica redundante</span>
+                </div>
+                
+                <div class="kpi-card">
+                  <span class="kpi-title">Nomenclaturas Corretas (PDM)</span>
+                  <div class="kpi-value success">&lt; 10%</div>
+                  <span class="kpi-desc">Itens com estrutura taxonômica validada</span>
+                </div>
+              </div>
+
+              <div class="grid-cols-2">
+                <div class="markdown-card">
+                  <h3>Os Três Pilares de Segurança de Estoque</h3>
+                  <p><strong>1. Inventário Preciso:</strong> Redução drástica de desperdícios eliminando códigos duplicados. Um único código mestre realimenta as transações de controle do almoxarifado físico.</p>
+                  <p><strong>2. Reposição via MRP:</strong> O SAP monitora níveis críticos de insumos automaticamente, gerando solicitações de compras pré-estruturadas baseadas em especificações técnicas unificadas.</p>
+                  <p><strong>3. Blindagem Fiscal:</strong> Alinhamento com a classificação fiscal correta na origem (NCM) para prevenir riscos e atrasos de transporte.</p>
+                </div>
+                
+                <div class="markdown-card">
+                  <h3>Padrão de Descrição de Materiais (PDM - ISO 8000)</h3>
+                  <p>Normatização rígida para controle cadastral corporativo, aplicando a fórmula:</p>
+                  <div style="background-color: rgba(255, 107, 0, 0.05); padding: 16px; border-radius: 4px; border: 1px dashed var(--color-brand); font-family: var(--font-mono); font-size: 11px; color: var(--color-brand); margin-bottom: 16px;">
+                    [SUBSTANTIVO] , [MODIFICADOR 1] , [MODIFICADOR 2] , ... , [FABRICANTE/MODELO] , [ESPECIFICAÇÕES]
+                  </div>
+                  <p>Benefícios imediatos:</p>
+                  <ul>
+                    <li>Prevenção de cadastros em lote com descrições redundantes (ex: 'Parafuso', 'Par. Sext.').</li>
+                    <li>Sustentabilidade para a trava anti-duplicação automatizada.</li>
+                    <li>Apoio integral à fabricação interna de ativos no projeto do MUBI Nacional.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION: DIAGNÓSTICO DA BASE -->
+            <section id="diagnostico" class="section-panel">
+              <div>
+                <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">Diagnóstico Analítico da Base de Itens</h1>
+                <p class="text-lead">Resultados consolidados da auditoria programática executada sobre os 14.799 itens do SAP.</p>
+              </div>
+              
+              <div class="grid-cols-2">
+                <div class="visual-card">
+                  <div class="visual-card-title">Distribuição de Status Cadastral</div>
+                  <div class="chart-bar-container">
+                    <div class="chart-bar-row">
+                      <div class="chart-bar-labels">
+                        <span class="chart-bar-name">Itens Ativos</span>
+                        <span class="chart-bar-val">10.276 (69.4%)</span>
+                      </div>
+                      <div class="chart-bar-outer">
+                        <div class="chart-bar-inner success" style="width: 69.4%"></div>
+                      </div>
+                    </div>
+                    <div class="chart-bar-row">
+                      <div class="chart-bar-labels">
+                        <span class="chart-bar-name">Itens Inativos</span>
+                        <span class="chart-bar-val">4.523 (30.6%)</span>
+                      </div>
+                      <div class="chart-bar-outer">
+                        <div class="chart-bar-inner" style="width: 30.6%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <p style="font-size: 12px; color: var(--color-text-secondary);">O alto volume de itens inativos reflete históricos obsoletos de compras que devem ser separados na base de dados activa alimentadora do SAP.</p>
+                </div>
+                
+                <div class="visual-card">
+                  <div class="visual-card-title">Conformidade Taxonômica (Fórmula PDM)</div>
+                  <div class="chart-bar-container">
+                    <div class="chart-bar-row">
+                      <div class="chart-bar-labels">
+                        <span class="chart-bar-name">Categoria Parafusos (Fora do Padrão)</span>
+                        <span class="chart-bar-val">294 de 326 (90.2%)</span>
+                      </div>
+                      <div class="chart-bar-outer">
+                        <div class="chart-bar-inner danger" style="width: 90.2%"></div>
+                      </div>
+                    </div>
+                    <div class="chart-bar-row">
+                      <div class="chart-bar-labels">
+                        <span class="chart-bar-name">Categoria Monitores (Fora do Padrão)</span>
+                        <span class="chart-bar-val">492 de 566 (87.0%)</span>
+                      </div>
+                      <div class="chart-bar-outer">
+                        <div class="chart-bar-inner danger" style="width: 87.0%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <p style="font-size: 12px; color: var(--color-text-secondary);">A maior parte dos desvios decorre de cadastros livres manuais com caixa baixa, falta de vírgula delimitadora de atributos e informações secundárias poluentes.</p>
+                </div>
+              </div>
+
+              <div class="markdown-card">
+                <h3 style="margin-bottom: 24px;">Gargalo Identificado: Duplicidades Ativas Multi-Grupo</h3>
+                <p>O maior desvio estrutural identificado na base de dados é a presença de **825 descrições idênticas ativas** que geram **1.561 códigos redundantes ativos**. Esse desvio atravessa os prefixos cadastrais corporativos.</p>
+                
+                <div class="table-container" style="margin-top: 16px;">
+                  <table class="executive-table">
+                    <thead>
+                      <tr>
+                        <th>Descrição Idêntica Ativa</th>
+                        <th>Custo do Processo</th>
+                        <th>Código SAP do Item</th>
+                        <th>Grupo no Sistema</th>
+                        <th>Status do Cadastro</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td rowspan="2" style="font-weight: 600; vertical-align: middle;">MULTIMETRO DIGITAL</td>
+                        <td rowspan="2" style="vertical-align: middle; color: var(--color-danger); font-weight: 600;">Alto Impacto Logístico</td>
+                        <td><span class="item-code">FEA0042</span> / <span class="item-code">FEA1554</span></td>
+                        <td>BENS PEQUENO VALOR</td>
+                        <td><span class="badge-status danger">Ativo</span></td>
+                      </tr>
+                      <tr>
+                        <td><span class="item-code">MEC0608</span> / <span class="item-code">MEC1001</span></td>
+                        <td>OPEX - ESTOQUE</td>
+                        <td><span class="badge-status danger">Ativo</span></td>
+                      </tr>
+                      <tr>
+                        <td rowspan="2" style="font-weight: 600; vertical-align: middle;">MAQUINA NUC (ELETROMIDIA BACKUP)</td>
+                        <td rowspan="2" style="vertical-align: middle; color: var(--color-danger); font-weight: 600;">Redundância de CAPEX</td>
+                        <td><span class="item-code">MEC0006</span> / <span class="item-code">MEC0527</span> / <span class="item-code">MEC0809</span></td>
+                        <td>CAPEX - ESTOQUE</td>
+                        <td><span class="badge-status danger">Ativo</span></td>
+                      </tr>
+                      <tr>
+                        <td><span class="item-code">MEC0886</span></td>
+                        <td>OPEX - ESTOQUE</td>
+                        <td><span class="badge-status danger">Ativo</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION: FLUXO DE GOVERNANÇA (MERMAID) -->
+            <section id="fluxo-governanca" class="section-panel">
+              <div>
+                <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">Fluxo Futuro de Governança Cadastral</h1>
+                <p class="text-lead">Estrutura organizacional do canal integrado para novos cadastros e reposição inteligente.</p>
+              </div>
+
+              <div class="visual-card">
+                <div class="visual-card-title" style="margin-bottom: 24px;">Fluxograma do Processo Saneado</div>
+                <div class="mermaid-wrapper">
+                  <div class="mermaid" id="mermaid-diagram">
+graph TD
+    A["Solicitação de Material"] --> B["Validação do Substantivo no Slack"]
+    B --> C{"Existe Substantivo no SAP?"}
+    C -->|Sim| D["Definição dos Modificadores via Bot"]
+    C -->|Não| E["Encaminhamento à Equipe de Governança"]
+    
+    D --> F["Busca Exata por PDM"]
+    F --> G{"Item Exato Já Existe?"}
+    
+    G -->|Sim| H["Reuso do Código Mestre Único"]
+    G -->|Não| I["Geração Automática do Código ISO 8000"]
+    
+    I --> J["Amarração da NCM de Origem"]
+    J --> K["Gravação no SAP - Cadastro Travado"]
+    
+    H --> L["Ativação do MRP Automático"]
+    K --> L
+
+    style A fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1px,color:#1A202C
+    style B fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1px,color:#1A202C
+    style C fill:#FF6B00,stroke:#FF6B00,stroke-width:1px,color:#FFFFFF
+    style D fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1px,color:#1A202C
+    style E fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1px,color:#1A202C
+    style F fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1px,color:#1A202C
+    style G fill:#FF6B00,stroke:#FF6B00,stroke-width:1px,color:#FFFFFF
+    style H fill:#10B981,stroke:#10B981,stroke-width:1px,color:#FFFFFF
+    style I fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1px,color:#1A202C
+    style J fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1px,color:#1A202C
+    style K fill:#10B981,stroke:#10B981,stroke-width:1px,color:#FFFFFF
+    style L fill:#10B981,stroke:#10B981,stroke-width:1px,color:#FFFFFF
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECTION: TABELA COMPARATIVA -->
+            <section id="comparativo" class="section-panel">
+              <div>
+                <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">Tabela Comparativa Cadastral</h1>
+                <p class="text-lead">Análise demonstrativa direta comparando a base legada não padronizada com o modelo futuro saneado.</p>
+              </div>
+
+              <div class="table-filter-tabs">
+                <button class="tab-btn active" data-tab-sheet="parafusos">Categoria: Parafusos</button>
+                <button class="tab-btn" data-tab-sheet="monitores">Categoria: Monitores</button>
+                <button class="tab-btn" data-tab-sheet="equipamentos">Categoria: Equipamentos & Automação</button>
+              </div>
+
+              <div class="table-container">
+                <!-- SUBTAB: PARAFUSOS -->
+                <table class="executive-table" id="table-parafusos">
+                  <thead>
+                    <tr>
+                      <th>Código SAP</th>
+                      <th>Descrição Legada (Antes)</th>
+                      <th>Diagnóstico de Falha</th>
+                      <th>PDM Proposto (Depois)</th>
+                      <th>NCM Saneada</th>
+                      <th>Ação Recomendada</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="item-code">MEO0466</span></td>
+                      <td><span class="item-desc-before">PARAFUSO CABEÇA CHATA PHILIPS - M5X45mm</span></td>
+                      <td>Uso de caixa baixa parcial, delimitador incorreto (traço) e unidade de medida duplicada (mm).</td>
+                      <td><span class="item-desc-after">PARAFUSO, CABECA CHATA, PHILIPS, M5X45, ACO CARBONO</span></td>
+                      <td><span class="ncm-code">7318.15.95</span></td>
+                      <td><span class="badge-status success">Padronizar</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="item-code">MEO0469</span></td>
+                      <td><span class="item-desc-before">PARAFUSO PHILIPS  6MM</span></td>
+                      <td>Espaçamento duplo redundante, caixa baixa e falta do modificador de formato de cabeça.</td>
+                      <td><span class="item-desc-after">PARAFUSO, FLANGEADO, PHILLIPS, M6, ZINCADO</span></td>
+                      <td><span class="ncm-code">7318.15.95</span></td>
+                      <td><span class="badge-status success">Padronizar</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="item-code">MEO0471</span></td>
+                      <td><span class="item-desc-before">PARAFUSO SEXTAVADO 10MM</span></td>
+                      <td>Item físico duplicado na base legado, sem especificação de material (Inativo).</td>
+                      <td><span class="item-desc-after">PARAFUSO, SEXTAVADO, M10, ACO GALVANIZADO</span></td>
+                      <td><span class="ncm-code">7318.15.95</span></td>
+                      <td><span class="badge-status danger">Unificar Mestre</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <!-- SUBTAB: MONITORES -->
+                <table class="executive-table" id="table-monitores" style="display: none;">
+                  <thead>
+                    <tr>
+                      <th>Código SAP</th>
+                      <th>Descrição Legada (Antes)</th>
+                      <th>Diagnóstico de Falha</th>
+                      <th>PDM Proposto (Depois)</th>
+                      <th>NCM Saneada</th>
+                      <th>Ação Recomendada</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="item-code">MEC0021</span></td>
+                      <td><span class="item-desc-before">MONITOR 15 - LG Botão Lateral</span></td>
+                      <td>Caixa baixa parcial, poluição por termo informal ("Botão Lateral").</td>
+                      <td><span class="item-desc-after">MONITOR, LCD, 15 POLEGADAS, LG, L15W</span></td>
+                      <td><span class="ncm-code">8528.59.20</span></td>
+                      <td><span class="badge-status success">Padronizar</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="item-code">MEC0032</span></td>
+                      <td><span class="item-desc-before">MONITOR 17 - LG L1742S (Botão Lateral)</span></td>
+                      <td>Uso de caracteres especiais irrelevantes, redundância de especificações secundárias.</td>
+                      <td><span class="item-desc-after">MONITOR, LCD, 17 POLEGADAS, LG, L1742S</span></td>
+                      <td><span class="ncm-code">8528.59.20</span></td>
+                      <td><span class="badge-status success">Padronizar</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <!-- SUBTAB: EQUIPAMENTOS -->
+                <table class="executive-table" id="table-equipamentos" style="display: none;">
+                  <thead>
+                    <tr>
+                      <th>Código SAP</th>
+                      <th>Descrição Legada (Antes)</th>
+                      <th>Diagnóstico de Falha</th>
+                      <th>PDM Proposto (Depois)</th>
+                      <th>NCM Saneada</th>
+                      <th>Ação Recomendada</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="item-code">MEC1175</span></td>
+                      <td><span class="item-desc-before">SWITCH  SF 800 Q + 8 PORTAS FAST ETHERNET 10/100</span></td>
+                      <td>Duplicidade direta de item físico com cadastro redundante sob o mesmo fornecedor.</td>
+                      <td><span class="item-desc-after">SWITCH, FAST ETHERNET, 8 PORTAS, INTELBRAS, SF 800 Q</span></td>
+                      <td><span class="ncm-code">8517.62.55</span></td>
+                      <td><span class="badge-status success">Manter Mestre</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="item-code">MEC1248</span></td>
+                      <td><span class="item-desc-before">SWITCH 8 PORTAS FAST ETHERNET – INTELBRAS SF 800</span></td>
+                      <td>Redundância de descrição física activa no SAP do mesmo switch SF 800 Q.</td>
+                      <td><span class="item-desc-after">SWITCH, FAST ETHERNET, 8 PORTAS, INTELBRAS, SF 800 Q</span></td>
+                      <td><span class="ncm-code">8517.62.55</span></td>
+                      <td><span class="badge-status danger">Unificar Mestre</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="item-code">FEA0042</span></td>
+                      <td><span class="item-desc-before">MULTIMETRO DIGITAL</span></td>
+                      <td>Falta extrema de detalhamento técnico de marca, modelo e especificações de segurança.</td>
+                      <td><span class="item-desc-after">MULTIMETRO, DIGITAL, PORTATIL, CAT III, MINIPA, ET-1002</span></td>
+                      <td><span class="ncm-code">9030.33.19</span></td>
+                      <td><span class="badge-status success">Manter Mestre</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="item-code">FEA1554</span></td>
+                      <td><span class="item-desc-before">MULTIMETRO DIGITAL</span></td>
+                      <td>Duplicidade idêntica ativa do multímetro do mesmo almoxarifado.</td>
+                      <td><span class="item-desc-after">MULTIMETRO, DIGITAL, PORTATIL, CAT III, MINIPA, ET-1002</span></td>
+                      <td><span class="ncm-code">9030.33.19</span></td>
+                      <td><span class="badge-status danger">Unificar Mestre</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <!-- SECTION: SIMULADOR SLACK -->
+            <section id="simulador-slack" class="section-panel">
+              <div>
+                <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">Simulador de Governança no Slack</h1>
+                <p class="text-lead">Demonstração interativa da barreira de entrada inteligente (Trava de Cadastro) para prevenir desvios no SAP.</p>
+              </div>
+
+              <div class="slack-simulator-container">
+                <!-- Slack Sidebar -->
+                <div class="slack-sidebar">
+                  <div class="slack-workspace-header">
+                    <span class="slack-workspace-name">Eletromidia Workspace</span>
+                  </div>
+                  <div class="slack-sidebar-list">
+                    <div class="slack-channel-item active">
+                      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
+                      </svg>
+                      cadastro-material
+                    </div>
+                    <div class="slack-channel-item">
+                      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
+                      </svg>
+                      alertas-governanca
+                    </div>
+                    <div class="slack-channel-item">
+                      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
+                      </svg>
+                      logs-sap-mrp
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slack Chat Area -->
+                <div class="slack-chat-area">
+                  <div class="slack-chat-header">
+                    <span class="slack-chat-title">#cadastro-material</span>
+                    <span class="slack-chat-desc">Interface Oficial de Apoio ao Planejamento Cadastral MDM</span>
+                  </div>
+
+                  <!-- Messages Viewport -->
+                  <div class="slack-messages-viewport" id="slack-messages">
+                    <!-- Instantiated dynamically -->
+                  </div>
+
+                  <!-- Input Box -->
+                  <div class="slack-input-area">
+                    <div class="slack-input-box">
+                      <textarea class="slack-input-text" id="slack-input-field" placeholder="Escreva uma mensagem ou escolha um caso de teste..." rows="1"></textarea>
+                      <div class="slack-input-actions">
+                        <span style="font-size: 11px; color: #616061;">Modo Simulação Ativo</span>
+                        <button class="slack-input-btn" id="slack-send-btn">Enviar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- JS lógico de controle -->
+    <script>
+      // Global Application State
+      let slackMessages = [];
+      let slackDraftItem = {};
+
+      // Sidebar Navigation Control
+      const menuItems = document.querySelectorAll('.menu-item');
+      const sections = document.querySelectorAll('.section-panel');
+      const barPageTitle = document.getElementById('bar-page-title');
+
+      menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const tabName = item.getAttribute('data-tab');
+          if (!tabName) return;
+          
+          // Toggle Active Class in Menu
+          menuItems.forEach(mi => mi.classList.remove('active'));
+          item.classList.add('active');
+          
+          // Toggle Active Panel
+          sections.forEach(sec => sec.classList.remove('active'));
+          const targetSection = document.getElementById(tabName);
+          if (targetSection) targetSection.classList.add('active');
+          
+          // Set Header Title
+          if (barPageTitle) {
+            barPageTitle.textContent = item.textContent.trim() || '';
+          }
+
+          // Re-render Mermaid on Tab Switch
+          if (tabName === 'fluxo-governanca') {
+            setTimeout(() => {
+              if (window.mermaid) {
+                window.mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+              }
+            }, 50);
+          }
+        });
+      });
+
+      // Spreadsheet Tab Swapping
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const spreadsheetTables = {
+        parafusos: document.getElementById('table-parafusos'),
+        monitores: document.getElementById('table-monitores'),
+        equipamentos: document.getElementById('table-equipamentos'),
+      };
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const sheetTab = btn.getAttribute('data-tab-sheet');
+          if (!sheetTab) return;
+
+          tabBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Toggle Tables
+          Object.keys(spreadsheetTables).forEach(key => {
+            const el = spreadsheetTables[key];
+            if (el) {
+              if (key === sheetTab) {
+                el.style.display = 'table';
+              } else {
+                el.style.display = 'none';
+              }
+            }
+          });
+        });
+      });
+
+      // Slack Bot Simulator Logic
+      const slackMessagesViewport = document.getElementById('slack-messages');
+      const slackInputField = document.getElementById('slack-input-field');
+      const slackSendBtn = document.getElementById('slack-send-btn');
+
+      function getTimestamp() {
+        const now = new Date();
+        return now.toTimeString().substring(0, 5);
+      }
+
+      function appendSlackMessage(msg) {
+        slackMessages.push(msg);
+        renderSlackMessages();
+      }
+
+      function renderSlackMessages() {
+        if (!slackMessagesViewport) return;
+        
+        slackMessagesViewport.innerHTML = slackMessages.map(msg => {
+          let interactiveHTML = '';
+          if (msg.interactiveBlock) {
+            let optionsHTML = '';
+            msg.interactiveBlock.options.forEach(opt => {
+              let btnClass = 'slack-block-btn' + (opt.primary ? ' primary' : '');
+              optionsHTML += '<button class="' + btnClass + '" data-action="' + opt.action + '">' + opt.label + '</button>';
+            });
+            interactiveHTML = '<div class="slack-interactive-block">' +
+              '<div class="slack-block-title">' + msg.interactiveBlock.title + '</div>' +
+              '<div class="slack-block-options">' + optionsHTML + '</div>' +
+              '</div>';
+          }
+
+          let botLabel = msg.isBot ? '<span class="slack-bot-label">Bot</span>' : '';
+          let avatarClass = 'slack-avatar' + (msg.isBot ? ' bot' : '');
+
+          return '<div class="slack-message-row">' +
+            '<div class="' + avatarClass + '">' + msg.avatarText + '</div>' +
+            '<div class="slack-message-content">' +
+              '<div class="slack-message-header">' +
+                '<span class="slack-sender-name">' + msg.name + '</span>' +
+                botLabel +
+                '<span class="slack-message-time">' + msg.time + '</span>' +
+              '</div>' +
+              '<div class="slack-message-text">' + msg.text + '</div>' +
+              interactiveHTML +
+            '</div>' +
+            '</div>';
+        }).join('');
+        
+        // Scroll to Bottom
+        slackMessagesViewport.scrollTop = slackMessagesViewport.scrollHeight;
+
+        // Re-attach event listeners to interactive block buttons
+        const buttons = slackMessagesViewport.querySelectorAll('.slack-block-btn');
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const action = btn.getAttribute('data-action');
+            if (action) {
+              handleSlackAction(action);
+            }
+          });
+        });
+      }
+
+      function handleSlackAction(action) {
+        if (action === 'start_parafuso') {
+          slackDraftItem = {};
+          appendSlackMessage({
+            id: Math.random().toString(),
+            sender: 'user',
+            name: 'Comprador Eletromidia',
+            avatarText: 'CE',
+            time: getTimestamp(),
+            text: 'Quero cadastrar um novo Parafuso para os MUBIs.',
+            isBot: false
+          });
+          
+          setTimeout(() => {
+            slackDraftItem.substantive = 'PARAFUSO';
+            appendSlackMessage({
+              id: Math.random().toString(),
+              sender: 'bot',
+              name: 'MDM Bot de Governança',
+              avatarText: 'MB',
+              time: getTimestamp(),
+              text: 'Identificado Substantivo Padrão: PARAFUSO.\nDe acordo com as diretrizes do Kaizen K30 (ISO 8000), selecione ou digite o tipo de cabeça/fenda (Modificador 1):',
+              isBot: true,
+              interactiveBlock: {
+                title: 'Passo 1: Tipo de Cabeça (Modificador 1)',
+                options: [
+                  { label: 'Cabeça Sextavada', action: 'mod1_sextavado' },
+                  { label: 'Cabeça Chata Philips', action: 'mod1_chata' },
+                  { label: 'Cabeça Panela', action: 'mod1_panela' }
+                ]
+              }
+            });
+          }, 600);
+        } else if (action.startsWith('mod1_')) {
+          const mod1 = action.substring(5).toUpperCase();
+          slackDraftItem.modifier1 = mod1;
+          
+          appendSlackMessage({
+            id: Math.random().toString(),
+            sender: 'user',
+            name: 'Comprador Eletromidia',
+            avatarText: 'CE',
+            time: getTimestamp(),
+            text: 'Selecionado Modificador 1: ' + mod1 + '.',
+            isBot: false
+          });
+
+          setTimeout(() => {
+            appendSlackMessage({
+              id: Math.random().toString(),
+              sender: 'bot',
+              name: 'MDM Bot de Governança',
+              avatarText: 'MB',
+              time: getTimestamp(),
+              text: 'Modificador 1 registrado: ' + mod1 + '.\nAgora insira ou escolha o diâmetro e rosca (Modificador 2):',
+              isBot: true,
+              interactiveBlock: {
+                title: 'Passo 2: Dimensão da Rosca (Modificador 2)',
+                options: [
+                  { label: 'M8X40', action: 'mod2_m8x40' },
+                  { label: 'M10X25', action: 'mod2_m10x25' },
+                  { label: 'M5X45', action: 'mod2_m5x45' }
+                ]
+              }
+            });
+          }, 600);
+        } else if (action.startsWith('mod2_')) {
+          const mod2 = action.substring(5).toUpperCase();
+          slackDraftItem.modifier2 = mod2;
+
+          appendSlackMessage({
+            id: Math.random().toString(),
+            sender: 'user',
+            name: 'Comprador Eletromidia',
+            avatarText: 'CE',
+            time: getTimestamp(),
+            text: 'Selecionado Modificador 2: ' + mod2 + '.',
+            isBot: false
+          });
+
+          setTimeout(() => {
+            appendSlackMessage({
+              id: Math.random().toString(),
+              sender: 'bot',
+              name: 'MDM Bot de Governança',
+              avatarText: 'MB',
+              time: getTimestamp(),
+              text: 'Modificador 2 registrado: ' + mod2 + '.\nDefina agora o material e tratamento de superfície (Especificação):',
+              isBot: true,
+              interactiveBlock: {
+                title: 'Passo 3: Material / Acabamento',
+                options: [
+                  { label: 'Inox Aço A2', action: 'spec_inox' },
+                  { label: 'Aço Carbono Galvanizado', action: 'spec_galvanizado' },
+                  { label: 'Aço Zincado', action: 'spec_zincado' }
+                ]
+              }
+            });
+          }, 600);
+        } else if (action.startsWith('spec_')) {
+          const rawSpec = action.substring(5).toUpperCase();
+          const spec = rawSpec === 'INOX' ? 'INOX A2' : 'ACO GALVANIZADO';
+          slackDraftItem.specs = spec;
+
+          appendSlackMessage({
+            id: Math.random().toString(),
+            sender: 'user',
+            name: 'Comprador Eletromidia',
+            avatarText: 'CE',
+            time: getTimestamp(),
+            text: 'Selecionado Material: ' + spec + '.',
+            isBot: false
+          });
+
+          setTimeout(() => {
+            const proposedName = 'PARAFUSO, ' + slackDraftItem.modifier1 + ', ' + slackDraftItem.modifier2 + ', ' + slackDraftItem.specs;
+            const defaultNcm = '7318.15.95';
+            
+            appendSlackMessage({
+              id: Math.random().toString(),
+              sender: 'bot',
+              name: 'MDM Bot de Governança',
+              avatarText: 'MB',
+              time: getTimestamp(),
+              text: 'Processo de Taxonomia Concluído com Sucesso.\n\nCódigo de PDM Gerado: `' + proposedName + '`\nClassificação Fiscal Associada (NCM): `' + defaultNcm + '` (Parafusos de ferro/aço com rosca).\n\nAnalisando banco de dados para evitar duplicação no SAP...',
+              isBot: true
+            });
+
+            setTimeout(() => {
+              appendSlackMessage({
+                id: Math.random().toString(),
+                sender: 'bot',
+                name: 'MDM Bot de Governança',
+                avatarText: 'MB',
+                time: getTimestamp(),
+                text: 'Retorno da Trava Cadastral: Nenhum código similar ativo com esta combinação de PDM.\n\nDeseja submeter a criação do código mestre unificado no SAP?',
+                isBot: true,
+                interactiveBlock: {
+                  title: 'Submissão de Cadastro ao SAP',
+                  options: [
+                    { label: 'Confirmar Cadastro SAP', action: 'sap_confirm', primary: true },
+                    { label: 'Cancelar Solicitacao', action: 'sap_cancel' }
+                  ]
+                }
+              });
+            }, 1000);
+          }, 600);
+        } else if (action === 'sap_confirm') {
+          appendSlackMessage({
+            id: Math.random().toString(),
+            sender: 'user',
+            name: 'Comprador Eletromidia',
+            avatarText: 'CE',
+            time: getTimestamp(),
+            text: 'Solicito a criação imediata no SAP.',
+            isBot: false
+          });
+
+          setTimeout(() => {
+            const generatedCode = 'MEO' + Math.floor(1000 + Math.random() * 9000);
+            appendSlackMessage({
+              id: Math.random().toString(),
+              sender: 'bot',
+              name: 'MDM Bot de Governança',
+              avatarText: 'MB',
+              time: getTimestamp(),
+              text: 'Sucesso! Cadastro de Item Homologado e gravado no SAP:\nCódigo Gerado: `' + generatedCode + '`\nPadrão PDM: `PARAFUSO, ' + slackDraftItem.modifier1 + ', ' + slackDraftItem.modifier2 + ', ' + slackDraftItem.specs + '`\nNCM Amarrada: `7318.15.95`\nStatus: `Ativo`\n\nEste item já está disponível para consultas do MRP.',
+              isBot: true,
+              interactiveBlock: {
+                title: 'Nova Simulação',
+                options: [
+                  { label: 'Iniciar Novo Cadastro', action: 'welcome' }
+                ]
+              }
+            });
+          }, 1000);
+        } else if (action === 'sap_cancel') {
+          appendSlackMessage({
+            id: Math.random().toString(),
+            sender: 'user',
+            name: 'Comprador Eletromidia',
+            avatarText: 'CE',
+            time: getTimestamp(),
+            text: 'Cancelar este cadastro de item.',
+            isBot: false
+          });
+
+          setTimeout(() => {
+            appendSlackMessage({
+              id: Math.random().toString(),
+              sender: 'bot',
+              name: 'MDM Bot de Governança',
+              avatarText: 'MB',
+              time: getTimestamp(),
+              text: 'Operação cancelada de forma segura. O banco de dados do SAP permanece intocado.',
+              isBot: true,
+              interactiveBlock: {
+                title: 'Simulador',
+                options: [
+                  { label: 'Voltar ao Inicio', action: 'welcome' }
+                ]
+              }
+            });
+          }, 600);
+        } else if (action === 'welcome') {
+          initSlackSimulator();
+        }
+      }
+
+      // Initialize Slack Simulator
+      function initSlackSimulator() {
+        slackMessages = [];
+        appendSlackMessage({
+          id: Math.random().toString(),
+          sender: 'bot',
+          name: 'MDM Bot de Governança',
+          avatarText: 'MB',
+          time: getTimestamp(),
+          text: 'Bem-vindo ao canal integrado de Governança de Cadastros (MDM) do Kaizen K30.\nEu sou o seu bot assistente da norma ISO 8000 para validação, saneamento e bloqueio de duplicações.\n\nEscolha um caso de teste executivo para simular:',
+          isBot: true,
+          interactiveBlock: {
+            title: 'Opções de Simulação de Cadastro',
+            options: [
+              { label: 'Caso 1: Cadastrar Novo Parafuso', action: 'start_parafuso' }
+            ]
+          }
+        });
+      }
+
+      // Attach input send events
+      if (slackSendBtn && slackInputField) {
+        const sendAction = () => {
+          const text = slackInputField.value.trim();
+          if (!text) return;
+
+          slackInputField.value = '';
+          
+          appendSlackMessage({
+            id: Math.random().toString(),
+            sender: 'user',
+            name: 'Comprador Eletromidia',
+            avatarText: 'CE',
+            time: getTimestamp(),
+            text: text,
+            isBot: false
+          });
+
+          // Custom text triggers
+          setTimeout(() => {
+            if (text.toLowerCase().includes('parafuso')) {
+              handleSlackAction('start_parafuso');
+            } else {
+              appendSlackMessage({
+                id: Math.random().toString(),
+                sender: 'bot',
+                name: 'MDM Bot de Governança',
+                avatarText: 'MB',
+                time: getTimestamp(),
+                text: 'Comando não reconhecido no escopo de demonstração executiva. Por favor, utilize os botões integrados para experimentar os fluxos guiados da norma ISO 8000.',
+                isBot: true,
+                interactiveBlock: {
+                  title: 'Opções de Simulação',
+                  options: [
+                    { label: 'Cadastrar Novo Parafuso', action: 'start_parafuso' }
+                  ]
+                }
+              });
+            }
+          }, 800);
+        };
+
+        slackSendBtn.addEventListener('click', sendAction);
+        slackInputField.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendAction();
+          }
+        });
+      }
+
+      // Initializations
+      initSlackSimulator();
+
+      // Initialize Mermaid Diagram
+      if (window.mermaid) {
+        window.mermaid.initialize({
+          startOnLoad: true,
+          theme: 'base',
+          themeVariables: {
+            primaryColor: '#FF6B00',
+            primaryTextColor: '#ffffff',
+            primaryBorderColor: '#FF6B00',
+            lineColor: '#FF6B00',
+            secondaryColor: '#FFFFFF',
+            tertiaryColor: '#F8FAFC',
+            mainBkg: '#FFFFFF',
+            nodeBorder: '#CBD5E0',
+            actorBorder: '#CBD5E0',
+            signalColor: '#FF6B00',
+            signalLineColor: '#718096',
+            labelBoxBorderColor: '#E2E8F0'
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
