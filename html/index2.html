@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaizen K30 - Guia Executivo | Eletromidia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2⚠️family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+  :root{
+    --navy:#0F1B2D;
+    --ink:#1A202C;
+    --muted:#5B6472;
+    --blue:#1D4ED8;
+    --blue-light:#EFF6FF;
+    --orange:#FF6B00;
+    --orange-light:#FFF3E8;
+    --green:#10B981;
+    --green-light:#ECFDF5;
+    --red:#E53E3E;
+    --red-light:#FEF2F2;
+    --bg:#F5F7FA;
+    --card:#FFFFFF;
+    --border:#E2E8F0;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Inter',sans-serif; line-height:1.55; font-size:15.5px;
+  }
+  h1,h2,h3,h4{font-family:'Manrope',sans-serif; letter-spacing:-0.01em; margin:0;}
+  a{color:inherit;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50; background:rgba(15,27,45,0.97);
+    backdrop-filter:blur(6px); border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; display:flex; align-items:center;
+    gap:6px; padding:12px 20px; overflow-x:auto; scrollbar-width:none;
+  }
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav-brand{color:#fff; font-weight:800; font-size:15px; margin-right:18px; white-space:nowrap; display:flex; align-items:center; gap:8px;}
+  .nav-brand .dot{width:9px;height:9px;border-radius:50%;background:var(--orange);display:inline-block;}
+  .nav-inner a{
+    color:#B8C2D1; text-decoration:none; font-size:13.5px; font-weight:600;
+    padding:8px 12px; border-radius:8px; white-space:nowrap; transition:.15s;
+  }
+  .nav-inner a:hover{background:rgba(255,255,255,0.08); color:#fff;}
+
+  /* HERO */
+  header.hero{
+    background:linear-gradient(180deg,var(--navy) 0%, #16273F 100%);
+    color:#fff; padding:64px 20px 56px;
+  }
+  .hero-inner{max-width:1180px; margin:0 auto;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700;
+    color:var(--orange); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:18px;
+  }
+  .eyebrow::before{content:''; width:22px; height:2px; background:var(--orange); display:inline-block;}
+  h1.title{font-size:clamp(28px,4vw,44px); font-weight:800; max-width:780px; color:#fff;}
+  h1.title span{color:var(--orange);}
+  .subtitle{color:#AEB9C9; font-size:16.5px; max-width:640px; margin-top:16px;}
+  .hero-tags{display:flex; gap:10px; margin-top:24px; flex-wrap:wrap;}
+  .tag{
+    background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14);
+    padding:6px 14px; border-radius:999px; font-size:12.5px; font-weight:600; color:#DCE3EC;
+  }
+  .stat-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:40px;
+  }
+  .stat-card{
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+    border-radius:var(--radius); padding:20px;
+  }
+  .stat-card .n{font-family:'Manrope'; font-size:30px; font-weight:800; color:#fff;}
+  .stat-card .l{font-size:12.5px; color:#98A5B8; margin-top:6px; line-height:1.4;}
+  .stat-card.orange .n{color:var(--orange);}
+  .stat-card.red .n{color:#FF8A8A;}
+
+  /* SECTIONS */
+  main{max-width:1180px; margin:0 auto; padding:0 20px;}
+  section{padding:56px 0; border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+  .sec-head{margin-bottom:28px; max-width:700px;}
+  .sec-num{font-family:'JetBrains Mono'; font-size:12.5px; color:var(--blue); font-weight:600; letter-spacing:0.05em;}
+  .sec-title{font-size:26px; font-weight:800; margin-top:6px;}
+  .sec-desc{color:var(--muted); font-size:14.5px; margin-top:10px;}
+
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:22px;
+  }
+  .card h4{font-size:15.5px; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+  .card p{color:var(--muted); font-size:13.8px; margin:0;}
+
+  /* Antes/depois */
+  .compare{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .compare-col{border-radius:var(--radius); padding:22px; border:1px solid var(--border);}
+  .compare-col.before{background:var(--red-light); border-color:#FBD5D5;}
+  .compare-col.after{background:var(--green-light); border-color:#B7EDDA;}
+  .compare-col h4{font-size:13px; text-transform:uppercase; letter-spacing:.06em; font-weight:800; margin-bottom:14px;}
+  .compare-col.before h4{color:var(--red);}
+  .compare-col.after h4{color:#067A56;}
+  .compare-col ul{margin:0; padding-left:18px; font-size:14px; color:var(--ink);}
+  .compare-col li{margin-bottom:8px;}
+
+  /* Tables */
+  .table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); background:var(--card);}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; min-width:560px;}
+  thead th{
+    background:var(--navy); color:#fff; text-align:left; padding:12px 16px;
+    font-size:12px; text-transform:uppercase; letter-spacing:.04em; font-weight:700;
+  }
+  tbody td{padding:12px 16px; border-top:1px solid var(--border); vertical-align:top; color:var(--ink);}
+  tbody tr:nth-child(even){background:#FAFBFD;}
+  .badge{display:inline-block; padding:3px 10px; border-radius:999px; font-size:11.5px; font-weight:700;}
+  .badge.green{background:var(--green-light); color:#067A56;}
+  .badge.orange{background:var(--orange-light); color:#B45300;}
+  .badge.red{background:var(--red-light); color:var(--red);}
+  .badge.blue{background:var(--blue-light); color:var(--blue);}
+
+  /* Pillars */
+  .pillar{border-top:4px solid var(--blue); position:relative;}
+  .pillar .pnum{
+    font-family:'Manrope'; font-size:34px; font-weight:800; color:var(--border);
+    position:absolute; top:14px; right:18px;
+  }
+  .pillar:nth-child(1){border-top-color:var(--orange);}
+  .pillar:nth-child(2){border-top-color:var(--blue);}
+  .pillar:nth-child(3){border-top-color:var(--green);}
+
+  /* Diagram box */
+  .diagram-box{
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:24px; overflow-x:auto;
+  }
+  .diagram-caption{
+    display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--muted);
+    margin-top:12px; padding-top:12px; border-top:1px dashed var(--border);
+  }
+  .mermaid{display:flex; justify-content:center;}
+
+  /* KPI */
+  .kpi{
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:24px; text-align:center;
+  }
+  .kpi .n{font-family:'Manrope'; font-size:34px; font-weight:800; color:var(--blue);}
+  .kpi .l{font-size:12.5px; color:var(--muted); margin-top:6px;}
+
+  /* Reasons */
+  .reason{display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--border);}
+  .reason:last-child{border-bottom:none;}
+  .reason .rn{
+    font-family:'Manrope'; font-size:22px; font-weight:800; color:var(--orange);
+    min-width:38px;
+  }
+  .reason h4{font-size:15px; margin-bottom:4px;}
+  .reason p{color:var(--muted); font-size:13.8px; margin:0;}
+
+  footer{background:var(--navy); color:#8B96A8; padding:34px 20px; text-align:center; font-size:12.5px;}
+  footer strong{color:#DCE3EC;}
+
+  code.inline{background:#EEF1F6; padding:2px 6px; border-radius:5px; font-family:'JetBrains Mono'; font-size:12.5px;}
+
+  @media (max-width:860px){
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    .grid-2, .grid-3, .grid-4, .compare{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand"><span class="dot"></span>Kaizen K30-BOT</span>
+    <a href="#visao-geral">Visao Geral</a>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#solucao">Solução</a>
+    <a href="#fluxos">Fluxos</a>
+    <a href="#ncm-fiscal">NCM &amp; Fiscal</a>
+    <a href="#departamentos">Por Departamento</a>
+    <a href="#taxonomia">Taxonomia</a>
+    <a href="#kitting-mrp">Kitting &amp; MRP</a>
+    <a href="#governanca">Governança</a>
+    <a href="#kpis">KPIs</a>
+    <a href="#aprovacao">Aprovação</a>
+    <a href="#cronograma">Cronograma</a>
+  </div>
+</nav>
+
+<header class="hero" id="visao-geral">
+  <div class="hero-inner">
+    <span class="eyebrow">Comitê Multidisciplinar – Eletromidia S.A.</span>
+    <h1 class="title">Kaizen K30-BOT: transformando o cadastro de itens em <span>inteligência e segurança fiscal</span></h1>
+    <p class="subtitle">Guia executivo para os departamentos Fiscal e Compras: como a reestruturação do cadastro de materiais no SAP - com IA e a norma ISO 8000 - elimina erro fiscal, estoque duplicado e compras emergenciais.</p>
+    <div class="hero-tags">
+      <span class="tag">👉 Destinatários: Fiscal &amp; Compras</span>
+      <span class="tag">👉 IA Gemini Ativa</span>
+      <span class="tag">👉 Norma ISO 8000 / PDM</span>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="n">14.799</div>
+        <div class="l">itens auditados na base SAP (extração jun/2026)</div>
+      </div>
+      <div class="stat-card">
+        <div class="n">10.276</div>
+        <div class="l">cadastros ativos - 69,4% do total</div>
+      </div>
+      <div class="stat-card red">
+        <div class="n">1.561</div>
+        <div class="l">códigos duplicados ativos, gerados por 825 descrições idênticas</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="n">&lt; 10%</div>
+        <div class="l">dos itens com estrutura taxonômica (PDM) validada</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- PROBLEMA -->
+  <section id="diagnostico">
+    <div class="sec-head">
+      <div class="sec-num">01 · Diagnóstico</div>
+      <h2 class="sec-title">Do caos cadastral ao risco fiscal real</h2>
+      <p class="sec-desc">Cada cadastro livre e sem padrão vira, na prática, um problema para quem paga a conta: Fiscal recolhe imposto errado, Compras compra em duplicidade.</p>
+    </div>
+
+    <div class="diagram-box">
+      <div class="mermaid">
+flowchart LR
+    A["👉 Cadastro livre<br/>sem padrão<br/>(ex: 'Par. Sext.')"] --> B["⚠️ NCM ausente<br/>ou incorreto"]
+    A --> C["⚠️ Códigos<br/>duplicados"]
+    A --> D["⚠️ Sem<br/>rastreabilidade"]
+    B --> E["👉 Retenção de<br/>notas fiscais"]
+    C --> F["👉 Estoque inflado<br/>+ compra redundante"]
+    D --> G["👉 Auditoria da<br/>Receita fica exposta"]
+    E --> H["👉 Multa, juros e<br/>caixa perdido"]
+    F --> H
+    G --> H
+
+    classDef origin fill:#FFFFFF,stroke:#94A3B8,stroke-width:1.5px,color:#1A202C
+    classDef problem fill:#FEF2F2,stroke:#E53E3E,stroke-width:1.5px,color:#7F1D1D
+    classDef impact fill:#FFF3E8,stroke:#FF6B00,stroke-width:1.5px,color:#7C2D12
+    classDef result fill:#0F1B2D,stroke:#0F1B2D,stroke-width:1px,color:#FFFFFF
+    class A origin
+    class B,C,D problem
+    class E,F,G impact
+    class H result
+      </div>
+      <div class="diagram-caption">👉 Leitura: um único cadastro sem padrão na origem se multiplica em três frentes de risco - e todas terminam em perda financeira.</div>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <h4>👉 Gargalo identificado: duplicidade ativa multi-grupo</h4>
+      <p>O maior desvio estrutural da base é a presença de <strong>825 descrições idênticas ativas</strong>, que geram <strong>1.561 códigos redundantes</strong> - atravessando prefixos e centros de custo diferentes.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Descrição idêntica ativa</th><th>Custo do processo</th><th>Código SAP do item</th><th>Grupo no sistema</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>MULTIMETRO DIGITAL</td><td><span class="badge red">Alto impacto logístico</span></td><td class="mono">FEA0042 / FEA1554</td><td>Bens Pequeno Valor</td><td>Ativo</td></tr>
+          <tr><td></td><td></td><td class="mono">MEC0608 / MEC1001</td><td>OPEX - Estoque</td><td>Ativo</td></tr>
+          <tr><td>MAQUINA NUC (Backup)</td><td><span class="badge orange">Redundância de CAPEX</span></td><td class="mono">MEC0006 / MEC0527 / MEC0809</td><td>CAPEX - Estoque</td><td>Ativo</td></tr>
+          <tr><td></td><td></td><td class="mono">MEC0886</td><td>OPEX - Estoque</td><td>Ativo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4>👉 Distribuição de status cadastral</h4>
+        <p><strong>10.276 ativos (69,4%)</strong> vs. <strong>4.523 inativos (30,6%)</strong>. O alto volume de itens inativos reflete histórico obsoleto de compras que precisa ser segregado da base ativa que alimenta o SAP.</p>
+      </div>
+      <div class="card">
+        <h4>👉 Conformidade taxonômica (fórmula PDM)</h4>
+        <p>Categoria Parafusos: <strong>294 de 326 fora do padrão (90,2%)</strong>. Categoria Monitores: <strong>492 de 566 fora do padrão (87,0%)</strong>. A maioria dos desvios vem de cadastro manual livre, sem vírgula delimitadora de atributos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUÇAO / PILARES -->
+  <section id="solucao">
+    <div class="sec-head">
+      <div class="sec-num">02 · A Solução</div>
+      <h2 class="sec-title">K30-BOT: um colega que nunca esquece a regra fiscal</h2>
+      <p class="sec-desc">O K30-BOT é um assistente virtual no Slack que conduz o usuário passo a passo no cadastro de qualquer item - aplicando três camadas de proteção antes que o erro chegue ao SAP.</p>
+    </div>
+
+    <div class="compare">
+      <div class="compare-col before">
+        <h4>👉 Antes - processo manual</h4>
+        <ul>
+          <li>Técnico abre o SAP e digita texto livre (ex: "Par. sext. M8 inox").</li>
+          <li>Fiscal descobre depois que o NCM está errado  retrabalho.</li>
+          <li>Compras descobre 3 códigos iguais  estoque inflado.</li>
+        </ul>
+      </div>
+      <div class="compare-col after">
+        <h4>⚠️ Depois - com K30-BOT</h4>
+        <ul>
+          <li>Usuário envia <code class="inline">@k30bot cadastrar parafuso</code> no Slack.</li>
+          <li>Bot pergunta tipo, medida e material; monta <code class="inline">PARAFUSO, SEXTAVADO, M8X40, INOX</code>.</li>
+          <li>Bot confirma: "Código #12345. NCM 7318.15.00. Risco fiscal: ZERO."</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="grid-3">
+      <div class="card pillar">
+        <span class="pnum">01</span>
+        <h4>👉 Poka-Yoke (à prova de erros)</h4>
+        <p>Campos obrigatórios com máscara, validação de similaridade em tempo real e NCM travado na origem. O sistema simplesmente <strong>não deixa</strong> o cadastro incompleto ou duplicado sair do papel.</p>
+      </div>
+      <div class="card pillar">
+        <span class="pnum">02</span>
+        <h4>👉 IA Gemini para agilidade</h4>
+        <p>Entende linguagem natural, autocompleta a descrição no padrão ISO 8000 e sugere o NCM - cadastro até <strong>5x mais rápido</strong> e já nascendo em compliance.</p>
+      </div>
+      <div class="card pillar">
+        <span class="pnum">03</span>
+        <h4>👉 Governança ISO 8000 + 55000</h4>
+        <p>Padrao internacional de qualidade de dado (sintático, semântico, pragmático) conectado à gestão de ativos - todo mundo, do almoxarifado ao fiscal, fala a mesma língua.</p>
+      </div>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Proteção (Poka-Yoke)</th><th>Como funciona</th><th>Benefício</th></tr></thead>
+        <tbody>
+          <tr><td>Campos com máscara</td><td>Bot recusa respostas fora do formato correto.</td><td><span class="badge green">Nunca mais cadastro incompleto</span></td></tr>
+          <tr><td>Validaçao em tempo real</td><td>Busca similaridade no SAP durante a digitaçao.</td><td><span class="badge green">Duplicidade eliminada no ato</span></td></tr>
+          <tr><td>NCM travado na origem</td><td>Classificaçao fiscal vinculada automaticamente.</td><td><span class="badge green">Zero retençoes de notas</span></td></tr>
+          <tr><td>Fórmula PDM obrigatória</td><td>Descrição segue padrão ISO 8000 (substantivo-modificador).</td><td><span class="badge green">Terminologia única entre áreas</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FLUXOS -->
+  <section id="fluxos">
+    <div class="sec-head">
+      <div class="sec-num">03 · Fluxos &amp; Arquitetura</div>
+      <h2 class="sec-title">Como o cadastro caminha, do Slack ao SAP</h2>
+      <p class="sec-desc">Dois diagramas: o fluxo funcional que o usuário vive, e a arquitetura técnica por trás - em linguagem de negócio.</p>
+    </div>
+
+    <div class="diagram-box">
+      <div class="mermaid">
+graph TD
+    A["👉 Solicitaçao de material<br/>no Slack"] --> B["👉 Validaçao do<br/>substantivo"]
+    B --> C{"Substantivo já<br/>existe no SAP⚠️"}
+    C -->|"Sim"| D["👉 IA define os<br/>modificadores"]
+    C -->|"Nao"| E["👉 Encaminha à<br/>equipe de governança"]
+    D --> F["👉 Busca exata<br/>por PDM"]
+    F --> G{"Item exato<br/>já existe⚠️"}
+    G -->|"Sim"| H["👉 Reusa código<br/>mestre único"]
+    G -->|"Nao"| I["👉 Gera código<br/>ISO 8000"]
+    I --> J["⚠️👉 Vincula NCM<br/>de origem"]
+    J --> K["👉 Grava no SAP<br/>- cadastro travado"]
+    H --> L["👉 Ativa MRP<br/>automático"]
+    K --> L
+
+    classDef step fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1.5px,color:#1A202C
+    classDef decision fill:#FF6B00,stroke:#FF6B00,stroke-width:1px,color:#FFFFFF
+    classDef success fill:#10B981,stroke:#10B981,stroke-width:1px,color:#FFFFFF
+    class A,B,D,E,F,I,J step
+    class C,G decision
+    class H,K,L success
+      </div>
+      <div class="diagram-caption">👉 Leitura: os losangos laranja sao os únicos pontos de decisão - todo o resto é automático e seguro.</div>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="diagram-box">
+      <div class="mermaid">
+flowchart LR
+    U["👉 Usuário<br/>Fiscal / Compras"] -->|conversa| SL["👉 Slack<br/>Interface"]
+    SL --> CR["👉 Cloud Run<br/>Motor de regras"]
+    CR --> AI["👉 Vertex AI / Gemini<br/>Entende &amp; sugere"]
+    CR --> DB["⚠️👉 Cloud Firestore<br/>Itens &amp; histórico"]
+    CR --> TK["👉 Cloud Tasks<br/>Fila resiliente"]
+    CR --> SM["👉 Secret Manager<br/>Chaves protegidas"]
+    AI --> SAP["👉 SAP<br/>Cadastro travado"]
+    DB --> SAP
+
+    classDef node fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1.5px,color:#1A202C
+    classDef ai fill:#EFF6FF,stroke:#1D4ED8,stroke-width:1.5px,color:#1E3A8A
+    classDef sap fill:#ECFDF5,stroke:#10B981,stroke-width:1.5px,color:#065F46
+    class U,SL,CR,DB,TK,SM node
+    class AI ai
+    class SAP sap
+      </div>
+      <div class="diagram-caption">👉 Leitura: nenhum servidor fica ocioso (arquitetura serverless) - a Eletromidia paga por cadastro processado, não por hora de máquina.</div>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Critério</th><th>Benefício para a Eletromidia</th></tr></thead>
+        <tbody>
+          <tr><td>👉 Segurança</td><td>Certificaçoes internacionais (SOC 2, ISO 27001) - dados fiscais protegidos.</td></tr>
+          <tr><td>👉 Escalabilidade</td><td>10 ou 10.000 cadastros simultâneos - o sistema não trava.</td></tr>
+          <tr><td>👉 Custo</td><td>Serverless: paga-se apenas pelo que se usa, sem servidor ocioso.</td></tr>
+          <tr><td>👉 Disponibilidade</td><td>99,95% de uptime - sempre no ar para Compras e Fiscal.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- NCM FISCAL -->
+  <section id="ncm-fiscal">
+    <div class="sec-head">
+      <div class="sec-num">04 · NCM &amp; Compliance Fiscal</div>
+      <h2 class="sec-title">O que é o NCM e por que ele é crítico</h2>
+      <p class="sec-desc">O NCM (Nomenclatura Comum do Mercosul) é o código de 8 dígitos que define a tributaçao de cada item - IPI, ICMS, PIS/COFINS. Um erro aqui vira problema fiscal grave.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Consequência de NCM errado</th><th>Impacto real na operação</th></tr></thead>
+        <tbody>
+          <tr><td>Alíquota de IPI/ICMS incorreta</td><td>Recolhimento a maior (perda de caixa) ou a menor (multa pesada da Receita).</td></tr>
+          <tr><td>Retenção de nota fiscal em trânsito</td><td>Painel OOH parado, atraso de obra, quebra de SLA com o cliente.</td></tr>
+          <tr><td>Autuaçao em fiscalizaçao</td><td>Multas administrativas, juros moratórios, exposiçao fiscal da diretoria.</td></tr>
+          <tr><td>Divergência CFOP x NCM</td><td>Rejeiçao automática da nota pelo destinatário, exigindo reemissão.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="diagram-box">
+      <div class="mermaid">
+flowchart TD
+    A["1👉 IA identifica a<br/>categoria técnica"] --> B["2👉 Consulta NCMs<br/>pré-validados pelo Fiscal"]
+    B --> C{"3👉 Confiança da<br/>IA acima de 90%⚠️"}
+    C -->|"Sim"| D["⚠️ NCM aplicado<br/>automaticamente"]
+    C -->|"Nao"| E["👉 Escala para<br/>Analista Fiscal"]
+    E --> F["👉 Fiscal revisa<br/>e homologa"]
+    F --> D
+    D --> G["👉 NCM travado<br/>no cadastro SAP"]
+
+    classDef step fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1.5px,color:#1A202C
+    classDef decision fill:#FF6B00,stroke:#FF6B00,stroke-width:1px,color:#FFFFFF
+    classDef success fill:#10B981,stroke:#10B981,stroke-width:1px,color:#FFFFFF
+    classDef human fill:#FFF3E8,stroke:#FF6B00,stroke-width:1.5px,color:#7C2D12
+    class A,B step
+    class C decision
+    class D,G success
+    class E,F human
+      </div>
+      <div class="diagram-caption">👉 Leitura: a IA só decide sozinha quando tem certeza alta; abaixo de 90% de confiança, um humano do Fiscal sempre homologa antes de travar no SAP.</div>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Categoria técnica</th><th>Exemplo de item</th><th>NCM vinculado</th><th>Tributos (referência)</th></tr></thead>
+        <tbody>
+          <tr><td>Interface Visual</td><td>Monitor LCD 21.5"</td><td class="mono">8528.59.20</td><td>IPI, ICMS-ST, PIS/COFINS</td></tr>
+          <tr><td>Painel Elétrico/Automaçao</td><td>Modem Celular 4G</td><td class="mono">8517.62.55</td><td>IPI, ICMS, PIS/COFINS</td></tr>
+          <tr><td>Estrutura Mecânica</td><td>Parafuso Sextavado Inox</td><td class="mono">7318.15.00</td><td>IPI Reduzido, ICMS Padrao</td></tr>
+          <tr><td>Conectividade</td><td>Cabo HDMI 2m</td><td class="mono">8544.42.00</td><td>IPI, ICMS, PIS/COFINS</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color:var(--muted); font-size:12.5px; margin-top:10px;">Nota: os NCMs acima sao exemplificativos; a tabela fiscal definitiva será validada pela curadoria fiscal corporativa da Eletromidia.</p>
+
+    <div style="height:24px;"></div>
+
+    <div class="card">
+      <h4>👉 Rastreabilidade &amp; Data Lineage (ficha limpa fiscal)</h4>
+      <p>O K30-BOT grava uma "impressao digital" imutável em cada transaçao: quem solicitou, o de-para com o código legado, a justificativa técnica do NCM e a assinatura eletrônica do aprovador. Em auditoria da Receita, a Eletromidia demonstra a legitimidade de cada classificação em segundos.</p>
+    </div>
+  </section>
+
+  <!-- DEPARTAMENTOS -->
+  <section id="departamentos">
+    <div class="sec-head">
+      <div class="sec-num">05 · Benefícios por Departamento</div>
+      <h2 class="sec-title">O que muda na prática, na sua mesa de trabalho</h2>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <h4 style="margin-bottom:12px;">👉 Departamento Fiscal</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Antes</th><th>Depois (com K30-BOT)</th></tr></thead>
+            <tbody>
+              <tr><td>NCMs incorretos/ausentes em até 30% dos itens.</td><td>100% de NCMs corretos e vinculados na origem.</td></tr>
+              <tr><td>Retenção recorrente de notas fiscais de transporte.</td><td>Zero notas retidas por erro de classificação.</td></tr>
+              <tr><td>Retrabalho de saneamento pós-faturamento.</td><td>Classificaçao feita uma única vez, na criação.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h4 style="margin-bottom:12px;">👉 Departamento de Compras</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Antes</th><th>Depois (com K30-BOT)</th></tr></thead>
+            <tbody>
+              <tr><td>Multiplicidade de códigos para o mesmo parafuso.</td><td>Código mestre único por especificaçao física.</td></tr>
+              <tr><td>Compras de emergência com frete caro e urgente.</td><td>Kitting padronizado e reposiçao preventiva.</td></tr>
+              <tr><td>Técnicos indo a campo com insumo errado.</td><td>Compra correta de primeira, via especificaçao PDM.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAXONOMIA -->
+  <section id="taxonomia">
+    <div class="sec-head">
+      <div class="sec-num">06 · Taxonomia de Dados</div>
+      <h2 class="sec-title">A fórmula ISO 8000 (PDM)</h2>
+      <p class="sec-desc">Toda descrição de insumo no SAP segue um padrão semântico rígido, para evitar ambiguidade e texto redundante.</p>
+    </div>
+
+    <div class="card" style="text-align:center; margin-bottom:24px; background:var(--navy); border-color:var(--navy);">
+      <p class="mono" style="color:#fff; font-size:15px; margin:0;">[SUBSTANTIVO] , [MODIFICADOR 1] , [MODIFICADOR 2] , ... , [FABRICANTE/MODELO] , [ESPECIFICAÇOES]</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Descrição legada (antes)</th><th>Padrao saneado ISO 8000 (depois)</th><th>Categoria estrutural</th></tr></thead>
+        <tbody>
+          <tr><td>"Par. Sext. M8 Inox"</td><td class="mono">PARAFUSO, SEXTAVADO, M8X40, INOX</td><td>Estrutura Mecânica</td></tr>
+          <tr><td>"Monitor 21"</td><td class="mono">MONITOR, LCD, 21.5 POLEGADAS, POSITIVO, MASTER</td><td>Interface Visual</td></tr>
+          <tr><td>"Modem vivo"</td><td class="mono">MODEM, CELULAR, ELSYS, VIVO, 4G + ANTENAS</td><td>Painel Elétrico/Automaçao</td></tr>
+          <tr><td>"Cabo HDMI"</td><td class="mono">CABO, HDMI, 2 METROS, PREMIUM</td><td>Conectividade</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="grid-4">
+      <div class="card"><h4>👉 Estrutura Mecânica</h4><p>Parafusos, buchas, eletrodutos, abraçadeiras - fixaçao e suporte de painéis nos abrigos.</p></div>
+      <div class="card"><h4>⚠️👉 Interface Visual</h4><p>Monitores LCD, calhas de acrílico, vidros temperados - mídia exibida ao público final.</p></div>
+      <div class="card"><h4>⚠️ Painel Elétrico/Automaçao</h4><p>Mini-PCs NUC, modems, switches, fontes - processamento de anúncios e conectividade 4G.</p></div>
+      <div class="card"><h4>👉 Ferramental Padronizado</h4><p>Chaves, alicates, testadores, multímetros - kit operacional das equipes de campo.</p></div>
+    </div>
+  </section>
+
+  <!-- KITTING E MRP -->
+  <section id="kitting-mrp">
+    <div class="sec-head">
+      <div class="sec-num">07 · Kitting &amp; MRP</div>
+      <h2 class="sec-title">Reposiçao inteligente, sem urgência e sem excesso</h2>
+      <p class="sec-desc">Com dados limpos e código único, o SAP projeta a necessidade de compra automaticamente - sem faltar estoque nem travar capital em excesso.</p>
+    </div>
+
+    <div class="card" style="margin-bottom:24px;">
+      <h4>👉 Kit de instalaçao MUBI (exemplo)</h4>
+      <p>Técnicos retiram caixas prontas no almoxarifado com os materiais exatos homologados para cada ordem de serviço:</p>
+    </div>
+
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <table>
+        <thead><tr><th>Item no kit</th><th>Código mestre ISO 8000</th><th>Qtd recomendada</th></tr></thead>
+        <tbody>
+          <tr><td>Parafuso sextavado M8x40 inox</td><td class="mono">PARAFUSO, SEXTAVADO, M8X40, INOX</td><td>8 un</td></tr>
+          <tr><td>Bucha plástica 10mm</td><td class="mono">BUCHA, PLASTICA, 10MM</td><td>8 un</td></tr>
+          <tr><td>Eletroduto galvanizado 1"</td><td class="mono">ELETRODUTO, GALVANIZADO, 1 POL</td><td>2 m</td></tr>
+          <tr><td>Monitor LCD 21.5" Positivo</td><td class="mono">MONITOR, LCD, 21.5 POLEGADAS, POSITIVO, MASTER</td><td>1 un</td></tr>
+          <tr><td>Modem celular Elsys Vivo 4G</td><td class="mono">MODEM, CELULAR, ELSYS, VIVO, 4G + ANTENAS</td><td>1 un</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="diagram-box">
+      <div class="mermaid">
+flowchart LR
+    A["👉 Consumo médio<br/>mensal (histórico)"] --> B["👉 Ponto de<br/>ressuprimento"]
+    B --> C{"Estoque ¾<br/>mínimo⚠️"}
+    C -->|"Sim"| D["👉 SAP gera requisiçao<br/>automática"]
+    C -->|"Nao"| A
+    D --> E["👉 Compra com lead<br/>time de 15 dias úteis"]
+    E --> F["⚠️ Reposiçao sem<br/>urgência nem frete extra"]
+    F --> A
+
+    classDef node fill:#FFFFFF,stroke:#CBD5E0,stroke-width:1.5px,color:#1A202C
+    classDef decision fill:#FF6B00,stroke:#FF6B00,stroke-width:1px,color:#FFFFFF
+    classDef success fill:#10B981,stroke:#10B981,stroke-width:1px,color:#FFFFFF
+    class A,B,E node
+    class C decision
+    class D,F success
+      </div>
+      <div class="diagram-caption">👉 Leitura: é um ciclo - quanto mais limpo o dado de consumo, mais preciso o disparo automático de compra.</div>
+    </div>
+  </section>
+
+  <!-- GOVERNANÇA -->
+  <section id="governanca">
+    <div class="sec-head">
+      <div class="sec-num">08 · Governança Contínua</div>
+      <h2 class="sec-title">O padrão não se sustenta sozinho - ele é mantido</h2>
+    </div>
+
+    <div class="diagram-box">
+      <div class="mermaid">
+flowchart LR
+    A["👉 Auditoria de qualidade<br/>(trimestral · Comitê Kaizen)"] --> B["👉 Atualizaçao de NCMs<br/>(sob demanda · Fiscal + TI)"]
+    B --> C["👉 Treinamento e reciclagem<br/>(semestral · Líder MDM)"]
+    C --> A
+
+    classDef node fill:#FFFFFF,stroke:#1D4ED8,stroke-width:1.5px,color:#1A202C
+    class A,B,C node
+      </div>
+      <div class="diagram-caption">👉 Leitura: as três engrenagens rodam em paralelo, o ano todo, para o padrão não voltar a se deteriorar.</div>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Mecanismo</th><th>Frequência</th><th>Responsáveis</th><th>Objetivo</th></tr></thead>
+        <tbody>
+          <tr><td>Auditoria de Qualidade</td><td><span class="badge blue">Trimestral</span></td><td>Comitê Kaizen K30</td><td>Identificar e sanear itens fora do padrão ISO 8000.</td></tr>
+          <tr><td>Atualizaçao de NCMs</td><td><span class="badge orange">Sob mudança legal</span></td><td>Depto. Fiscal + TI</td><td>Manter as regras tributárias do bot sincronizadas com a SEFAZ.</td></tr>
+          <tr><td>Treinamento e Reciclagem</td><td><span class="badge blue">Semestral</span></td><td>Líder de MDM</td><td>Garantir que novos técnicos dominem o bot no Slack.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- KPIS -->
+  <section id="kpis">
+    <div class="sec-head">
+      <div class="sec-num">09 · Indicadores de Sucesso</div>
+      <h2 class="sec-title">Metas do projeto, em números simples</h2>
+    </div>
+    <div class="grid-4">
+      <div class="kpi"><div class="n">100%</div><div class="l">Itens ISO 8000 na base ativa</div></div>
+      <div class="kpi"><div class="n">100%</div><div class="l">NCM correto desde a origem</div></div>
+      <div class="kpi"><div class="n">0%</div><div class="l">Duplicidades ativas</div></div>
+      <div class="kpi"><div class="n">&lt; 3 min</div><div class="l">Tempo médio de cadastro no Slack</div></div>
+    </div>
+  </section>
+
+  <!-- APROVACAO -->
+  <section id="aprovacao">
+    <div class="sec-head">
+      <div class="sec-num">10 · Resumo Executivo</div>
+      <h2 class="sec-title">5 motivos para aprovar o K30-BOT agora</h2>
+    </div>
+
+    <div class="reason">
+      <div class="rn">01</div>
+      <div><h4>Risco fiscal zero</h4><p>Vinculaçao inteligente de NCM na origem, homologada pela curadoria do próprio Departamento Fiscal.</p></div>
+    </div>
+    <div class="reason">
+      <div class="rn">02</div>
+      <div><h4>Estoque saneado e unificado</h4><p>Eliminaçao de redundâncias - o SAP passa a conter exatamente um código por especificaçao física.</p></div>
+    </div>
+    <div class="reason">
+      <div class="rn">03</div>
+      <div><h4>Reduçao de custos com urgências</h4><p>MRP inteligente e kitting eliminam as temidas compras emergenciais com frete superfaturado.</p></div>
+    </div>
+    <div class="reason">
+      <div class="rn">04</div>
+      <div><h4>Rastreabilidade pronta para fiscalizaçao</h4><p>Histórico completo (data lineage) de quando, quem e por que cada insumo foi cadastrado.</p></div>
+    </div>
+    <div class="reason">
+      <div class="rn">05</div>
+      <div><h4>Conformidade internacional</h4><p>Alinhamento às normas ISO 8000 (qualidade de dado) e ISO 55000 (gestão de ativos).</p></div>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item de decisão</th><th>Definiçao proposta pelo Kaizen K30</th></tr></thead>
+        <tbody>
+          <tr><td>A proposta (o quê)</td><td>Chatbot inteligente no Slack para guiar, automatizar e governar a entrada de cadastros de materiais.</td></tr>
+          <tr><td>O propósito (por quê)</td><td>Saneamento total da base, blindagem tributária contra autuação por NCM incorreto e reduçao do estoque duplicado.</td></tr>
+          <tr><td>Tecnologia (onde)</td><td>Hospedagem segura e serverless na Google Cloud (GCP) com Vertex AI / Gemini.</td></tr>
+          <tr><td>Investimento (quanto)</td><td>Infraestrutura sob demanda - cobra-se por transaçao, custo mensal de TI virtualmente desprezível.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CRONOGRAMA -->
+  <section id="cronograma">
+    <div class="sec-head">
+      <div class="sec-num">11 · Cronograma</div>
+      <h2 class="sec-title">Próximos passos, do sim ao rollout</h2>
+    </div>
+
+    <div class="diagram-box">
+      <div class="mermaid">
+gantt
+    title Cronograma de Implementaçao - Kaizen K30-BOT
+    dateFormat  YYYY-MM-DD
+    axisFormat  Sem. %W
+    section Fase 1 - Aprovação
+    Aprovação executiva e homologaçao da arquitetura :f1, 2026-08-03, 7d
+    section Fase 2 - Setup
+    Configuraçao do ambiente Google Cloud            :f2, after f1, 7d
+    section Fase 3 - Ajuste de IA
+    Ajuste do Vertex AI / Gemini com taxonomia        :f3, after f2, 14d
+    section Fase 4 - Piloto
+    Operaçao piloto com 50 itens de alto volume       :f4, after f3, 14d
+    section Fase 5 - Rollout
+    Rollout corporativo e saneamento em massa         :f5, after f4, 30d
+      </div>
+      <div class="diagram-caption">👉 Datas ilustrativas a partir da aprovação executiva - ajustáveis conforme a data real de kick-off.</div>
+    </div>
+
+    <div style="height:24px;"></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fase</th><th>Atividade principal</th><th>Prazo</th><th>Envolvidos</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Aprovação executiva e homologaçao da arquitetura.</td><td>1 semana</td><td>Diretoria, TI e Patrocinador Kaizen</td></tr>
+          <tr><td>2</td><td>Configuraçao inicial do ambiente Google Cloud.</td><td>1 semana</td><td>Equipe de TI &amp; Consultoria</td></tr>
+          <tr><td>3</td><td>Ajuste do modelo Vertex AI / Gemini com a taxonomia.</td><td>2 semanas</td><td>Curadores de Compras, Fiscal e Engenharia</td></tr>
+          <tr><td>4</td><td>Operaçao piloto controlada com 50 itens de alto volume.</td><td>2 semanas</td><td>Almoxarifado, Fiscal e Compras</td></tr>
+          <tr><td>5</td><td>Rollout oficial e saneamento em massa da base.</td><td>1 mês</td><td>Todos os compradores e técnicos autorizados</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p style="font-style:italic; color:#B8C2D1; max-width:560px; margin:0 auto 14px;">"A qualidade do cadastro determina a precisao do estoque e a segurança do imposto."</p>
+  <p><strong>Comitê Multidisciplinar – Kaizen K30</strong> - Eletromidia S.A. · c 2026 Todos os direitos reservados.</p>
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad:true,
+    theme:'base',
+    themeVariables:{
+      fontFamily:'Inter, sans-serif',
+      primaryColor:'#FFFFFF',
+      primaryBorderColor:'#CBD5E0',
+      primaryTextColor:'#1A202C',
+      lineColor:'#94A3B8',
+      secondaryColor:'#FF6B00',
+      tertiaryColor:'#ECFDF5',
+      fontSize:'14px'
+    },
+    flowchart:{ curve:'basis', htmlLabels:true, padding:14 },
+    gantt:{ fontSize:12, barHeight:22, sectionFontSize:12 }
+  });
+</script>
+
+</body>
+</html>
