@@ -731,17 +731,17 @@ flowchart LR
 gantt
     title Cronograma de Implementação - Chatbot-Itens
     dateFormat  YYYY-MM-DD
-    axisFormat  Sem. %W
+    axisFormat  %d/%m
     section Fase 1 - Aprovação
-    Aprovação executiva e homologação da arquitetura :f1, 2026-08-03, 7d
+    Aprovação Executiva :f1, 2026-08-03, 7d
     section Fase 2 - Setup
-    Configuração do ambiente Google Cloud            :f2, after f1, 7d
-    section Fase 3 - Ajuste de IA
-    Ajuste do Vertex AI / Gemini com taxonomia        :f3, after f2, 14d
+    Setup Cloud (GCP) :f2, after f1, 7d
+    section Fase 3 - IA
+    Ajuste IA (Gemini) :f3, after f2, 14d
     section Fase 4 - Piloto
-    Operação piloto com 50 itens de alto volume       :f4, after f3, 14d
+    Operação Piloto (50 itens) :f4, after f3, 14d
     section Fase 5 - Rollout
-    Rollout corporativo e saneamento em massa         :f5, after f4, 30d
+    Rollout & Saneamento :f5, after f4, 30d
       </div>
       <div class="diagram-caption">👉 Datas ilustrativas a partir da aprovação executiva - ajustáveis conforme a data real de kick-off.</div>
     </div>
@@ -784,7 +784,12 @@ gantt
       fontSize:'14px'
     },
     flowchart:{ curve:'basis', htmlLabels:true, padding:14 },
-    gantt:{ fontSize:12, barHeight:22, sectionFontSize:12 }
+    gantt:{
+      fontSize:12,
+      barHeight:26,
+      sectionFontSize:12,
+      leftPadding:180
+    }
   });
 </script>
 
